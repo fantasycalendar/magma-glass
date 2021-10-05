@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function index(Request $request)
+    public function index($article)
     {
         return view('obsidian_article', [
-            'article' => RetrieveArticle::dispatchSync($request->input('article') ?? '')
+            'article' => RetrieveArticle::dispatchSync($article ?? '')
         ]);
     }
 }
