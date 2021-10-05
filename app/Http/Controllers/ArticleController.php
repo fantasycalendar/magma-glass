@@ -8,6 +8,9 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        return view('obsidian_article');
+        return view('obsidian_article',[
+            'title' => 'A title',
+            'content' => 'Some content!'
+        ]);
     }
 }
