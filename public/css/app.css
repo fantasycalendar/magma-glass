@@ -772,6 +772,48 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+a {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+ul {
+  margin-left: 2rem;
+  list-style-type: disc;
+}
+
+ol {
+  margin-left: 2rem;
+  list-style-type: decimal;
+}
+
+li li {
+  padding-left: 0.75rem
+}
+
+table {
+  table-layout: auto;
+}
+
 .container {
   width: 100%;
 }

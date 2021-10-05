@@ -1,3 +1,39 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+    h1 {
+        @apply text-3xl;
+    }
+    h2 {
+        @apply text-2xl;
+    }
+    h3 {
+        @apply text-xl;
+    }
+
+    a {
+        @apply text-blue-500;
+    }
+
+    p {
+        @apply mb-4;
+    }
+
+    ul {
+        @apply list-disc ml-8;
+    }
+
+    ol {
+        @apply list-decimal ml-8;
+    }
+
+    li li {
+        @apply pl-3
+    }
+
+    table {
+        @apply table-auto;
+    }
+}

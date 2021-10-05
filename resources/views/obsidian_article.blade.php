@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2>{{ $article->name }}</h2>
+        @if($isIndex)
+            <h2>Index of <strong>{{ config('app.name') }}</strong></h2>
+        @else
+            <h2>{{ $article->name }}</h2>
+        @endif
     </x-slot>
 
     <div class="py-12">

@@ -14,16 +14,16 @@ class RetrieveArticle
     /**
      * @var string
      */
-    private $articleName;
+    private $articlePath;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(string $articleName)
+    public function __construct(string $articlePath)
     {
-        $this->articleName = $articleName;
+        $this->articlePath = $articlePath;
     }
 
     /**
@@ -34,10 +34,10 @@ class RetrieveArticle
      */
     public function handle(): Article
     {
-        if($this->articleName == '') {
-            $this->articleName = config('magmaglass.index_file', 'index');
+        if($this->articlePath == '') {
+            $this->articlePath = config('magmaglass.index_file', 'index');
         }
 
-        return ArticleCache::getByArticleName($this->articleName);
+        return ArticleCache::getByArticlePath($this->articlePath);
     }
 }
