@@ -61,7 +61,11 @@ class ArticleCache
 
         $fullArticlePath = Storage::disk('articles')->path($localPath);
         if(!Storage::disk('articles')->exists($localPath)) {
-            throw new ArticleNotFoundException("No article '$localPath' was found. (tried $fullArticlePath)");
+            if($articlePath == 'Home') {
+                return new Article('', '', '_You can create a note in the root of your vault called **"Home"** to customize this page._');
+            }
+
+            return new Article('Oooops!', $fullArticlePath, "## The file '$articlePath' doesn't exist yet!");
         }
 
         $details = pathinfo($fullArticlePath);

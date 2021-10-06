@@ -35,7 +35,7 @@ class RetrieveArticle
     public function handle(): Article
     {
         if($this->articlePath == '') {
-            $this->articlePath = config('magmaglass.index_file', 'index');
+            $this->articlePath = config('magmaglass.index_file', 'Home');
         }
 
         return ArticleCache::getByArticlePath($this->articlePath);

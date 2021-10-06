@@ -7,6 +7,7 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Support relative wikilinks
   - [ ] Support non-relative wikilinks
   - [ ] Allow marking certain folders as private
+  - [ ] Parsing/syntax highlighting of code blocks?
 - [ ] Have a traversible menu structure
 - [ ] Search
   - [ ] Needs to be quick and responsive
