@@ -2,14 +2,15 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
+use App\Models\Article;
 use App\Services\ArticleCache;
 
 class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
 {
 
-    public function parse(string $articleContent): string
+    public function parse(Article $article): Article
     {
-        return preg_replace_callback('/\[\[(.+?)\]\]/u', self::replaceWikilinks(), $articleContent);
+        return $article->setContent(preg_replace_callback('/\[\[(.+?)\]\]/u', self::replaceWikilinks(), $article->content));
     }
 
     private static function replaceWikilinks()

@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Services\ArticleParser;
+use App\Services\ArticleParser\ArticlePipeline;
 
 class Article
 {
-    public string $contents;
+    public string $content;
     public string $name;
     public string $path;
 
     public function __construct($name, $path, $contents)
     {
         $this->name = $name;
-        $this->contents = $contents;
+        $this->content = $contents;
         $this->path = $path;
     }
 
@@ -24,7 +24,7 @@ class Article
      */
     public function nameIsHeading(): bool
     {
-        return substr($this->contents, strpos($this->contents, "\n")) == '# ' . $this->name;
+        return substr($this->content, strpos($this->content, "\n")) == '# ' . $this->name;
     }
 
     /**
@@ -34,7 +34,7 @@ class Article
      */
     public function hideFirstLine(): self
     {
-        $this->contents = substr($this->contents, strpos($this->contents, "\n") + 1);
+        $this->content = substr($this->content, strpos($this->content, "\n") + 1);
 
         return $this;
     }
@@ -50,6 +50,13 @@ class Article
             $this->hideFirstLine();
         }
 
-        return ArticleParser::parse($this);
+        return ArticlePipeline::process($this)->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
     }
 }
