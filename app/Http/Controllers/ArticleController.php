@@ -9,7 +9,7 @@ class ArticleController extends Controller
 {
     public function index($articlePath = '')
     {
-        return view('obsidian_article', [
+        return view('show_article', [
             'isIndex' => $articlePath == '',
             'article' => RetrieveArticle::dispatchSync($articlePath)
         ]);
