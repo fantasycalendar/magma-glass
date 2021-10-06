@@ -17,7 +17,7 @@
         @apply text-blue-500;
     }
 
-    p {
+    :not(li) > p {
         @apply mb-4;
     }
 
@@ -35,5 +35,9 @@
 
     table {
         @apply table-auto;
+    }
+
+    [x-cloak] {
+        display: none !important;
     }
 }

@@ -13,16 +13,16 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.min.js" defer></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="h-screen flex overflow-hidden bg-gray-800">
+    <div class="h-screen flex overflow-hidden bg-gray-800" x-data="{ 'sidebar': false, 'loaded': false }">
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-        <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
             <!--
               Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -33,7 +33,7 @@
                 From: "opacity-100"
                 To: "opacity-0"
             -->
-            <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
 
             <!--
               Off-canvas menu, show/hide based on off-canvas menu state.
@@ -45,7 +45,7 @@
                 From: "translate-x-0"
                 To: "-translate-x-full"
             -->
-            <div class="relative flex-1 flex flex-col max-w-xs w-full bg-gray-700">
+            <div class="relative flex-1 flex flex-col max-w-xs w-full bg-gray-700 transition ease-in-out duration-300 transform" :class="{ 'translate-x-0': sidebar, '-translate-x-full': !sidebar }" x-cloak>
                 <!--
                   Close button, show/hide based on off-canvas menu state.
 
@@ -56,8 +56,8 @@
                     From: "opacity-100"
                     To: "opacity-0"
                 -->
-                <div class="absolute top-0 right-0 -mr-12 pt-2">
-                    <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <div class="absolute top-0 right-0 -mr-12 pt-2" :class="{ 'hidden': !sidebar }">
+                    <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebar = !sidebar">
                         <span class="sr-only">Close sidebar</span>
                         <!-- Heroicon name: outline/x -->
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -215,7 +215,7 @@
         </div>
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
-                <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" @click="sidebar = !sidebar">
                     <span class="sr-only">Open sidebar</span>
                     <!-- Heroicon name: outline/menu -->
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

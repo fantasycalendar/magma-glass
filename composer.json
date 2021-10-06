@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "paquettg/php-html-parser": "^3.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -22,6 +23,12 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"
     },
+    "repositories": [
+        {
+            "url": "https://github.com/arthur0102/php-html-parser.git",
+            "type": "git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

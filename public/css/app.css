@@ -792,7 +792,7 @@ a {
   color: rgba(59, 130, 246, var(--tw-text-opacity));
 }
 
-p {
+:not(li) > p {
   margin-bottom: 1rem;
 }
 
@@ -812,6 +812,10 @@ li li {
 
 table {
   table-layout: auto;
+}
+
+[x-cloak] {
+  display: none !important;
 }
 
 .container {

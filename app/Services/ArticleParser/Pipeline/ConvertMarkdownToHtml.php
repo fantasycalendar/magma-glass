@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\ArticleParser;
+namespace App\Services\ArticleParser\Pipeline;
 
 use App\Models\Article;
+use App\Services\ArticleParser\Pipe;
 use Parsedown;
 
 class ConvertMarkdownToHtml extends Pipe
