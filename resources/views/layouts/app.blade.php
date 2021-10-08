@@ -44,8 +44,8 @@
                     files: @json($menuJson),
                     renderLevel: function(obj,i){
                         let ref = 'l'+Math.random().toString(36).substring(7);
-                        let folderIcon = "<i class=\\'fa text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-folder\\'></i>";
-                        let fileIcon = "<i class=\\'fa text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-file\\'></i>";
+                        let folderIcon = "<i class=\\'fa text-yellow-400 dark:text-yellow-600 group-hover:text-yellow-500 dark:group-hover:text-orange-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-folder\\'></i>";
+                        let fileIcon = "<i class=\\'fa text-blue-400 dark:text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-file\\'></i>";
 
 
                         let html = `<a :href="(file.children ? '#' : file.filename)"
