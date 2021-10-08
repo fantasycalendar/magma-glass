@@ -41,18 +41,7 @@
 
             let fileTree = function() {
                 return {
-                    files: [
-                        { 'title': 'A test file', 'filename': 'A test file.md' },
-                        { 'title': 'A test folder', 'children': [
-                                { 'title': 'A test file', 'filename': 'A test folder/A test file.md' },
-                                { 'title': 'A second test folder', 'children': [
-                                        { 'title': 'A test file', 'filename': 'A test folder/A second test folder/A test file.md' }
-                                    ] },
-                                { 'title': 'A third test folder', 'children': [
-                                        { 'title': 'A test file', 'filename': 'A test folder/A third test folder/A test file.md' }
-                                    ] }
-                            ] }
-                    ],
+                    files: @json($menuJson),
                     renderLevel: function(obj,i){
                         let ref = 'l'+Math.random().toString(36).substring(7);
                         let folderIcon = "<i class=\\'fa text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-folder\\'></i>";

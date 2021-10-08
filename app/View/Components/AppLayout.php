@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Services\MenuBuilder;
 use Illuminate\View\Component;
 
 class AppLayout extends Component
@@ -13,6 +14,8 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('layouts.app');
+        return view('layouts.app', [
+            'menuJson' => MenuBuilder::build()
+        ]);
     }
 }
