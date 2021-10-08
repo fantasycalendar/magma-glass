@@ -17,10 +17,33 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <script>
+            // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                window.theme = 'dark'
+                document.documentElement.classList.add('dark')
+            } else {
+                window.theme = 'light'
+                document.documentElement.classList.remove('dark')
+                localStorage.theme = 'light'
+            }
+
+            window.toggleTheme = function() {
+                let theme = (localStorage.theme === 'dark' ? 'light' : 'dark');
+                window.theme = theme;
+                localStorage.theme = theme;
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+
+                console.log(window.theme);
+                console.log(localStorage);
+                console.log(document.documentElement.classList);
+            }
+        </script>
     </head>
-    <body class="font-sans antialiased">
+    <body id="app" class="font-sans antialiased" x-data="{ 'sidebar': false, 'loaded': false, 'theme': localStorage.theme }">
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="h-screen flex overflow-hidden bg-gray-800" x-data="{ 'sidebar': false, 'loaded': false }">
+    <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
             <!--
@@ -208,7 +231,12 @@
                         </nav>
                     </div>
                     <div class="flex-shrink-0 flex bg-gray-700 text-gray-400 p-4">
-                        {{ $page_name ?? config('app.name') }}
+                        <div>
+                            {{ $page_name ?? config('app.name') }}
+                        </div>
+                        <div>
+                            <i class="fa cursor-pointer p-4 border rounded" @click="window.toggleTheme" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
+                        </div>
                     </div>
                 </div>
             </div>
