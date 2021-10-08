@@ -17,10 +17,10 @@ class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
     {
         return function($matches) {
             if(ArticleCache::hasArticle($matches[1])) {
-                return sprintf("<a class='text-teal-500 font-semibold' href='%s'>%s</a>", wikilink($matches[1]), $matches[1]);
+                return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='%s'>%s</a>", wikilink($matches[1]), $matches[1]);
             }
 
-            return sprintf("<a class='text-rose-500 font-semibold' href='#'>%s</a>", $matches[1]);
+            return sprintf("<a class='text-rose-700 dark:text-rose-500 font-semibold' href='#'>%s</a>", $matches[1]);
         };
     }
 
