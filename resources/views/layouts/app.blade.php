@@ -113,7 +113,8 @@
 
                     <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                         <div class="flex-shrink-0 flex items-center px-4 text-center">
-                            <img class="h-18 mx-auto" src="{{ asset('images/logo.png') }}" alt="Workflow">
+                            <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
+                            <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
                         <nav class="mt-5 px-2 space-y-1" x-data="fileTree()">
                             <ul class="ml-0 list-none">
@@ -164,7 +165,7 @@
                 </div>
             </div>
             <div class="flex flex-col w-0 flex-1 overflow-hidden">
-                <div class="md:hidden flex justify-start align-items-middle pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100 shadow dark:shadow-none dark: bg-gray-700">
+                <div class="md:hidden flex justify-start align-items-middle pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100 shadow dark:shadow-none dark:bg-gray-700">
                     <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" @click="sidebar = !sidebar">
                         <span class="sr-only">Open sidebar</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
