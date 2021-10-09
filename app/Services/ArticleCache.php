@@ -72,4 +72,9 @@ class ArticleCache
 
         return new Article($details['filename'], $fullArticlePath, Storage::disk('articles')->get($localPath));
     }
+
+    public static function hasImage(string $imageName)
+    {
+        return Arr::has(static::populate(), $imageName);
+    }
 }

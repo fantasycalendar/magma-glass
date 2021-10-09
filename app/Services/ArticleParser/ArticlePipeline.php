@@ -4,6 +4,7 @@ namespace App\Services\ArticleParser;
 
 use App\Models\Article;
 use App\Services\ArticleParser\Pipeline\ConvertBannerYaml;
+use App\Services\ArticleParser\Pipeline\ConvertImageLinks;
 use App\Services\ArticleParser\Pipeline\ConvertMarkdownToHtml;
 use App\Services\ArticleParser\Pipeline\ConvertWikilinks;
 use App\Services\ArticleParser\Pipeline\StyleTables;
@@ -15,6 +16,7 @@ class ArticlePipeline
         ConvertBannerYaml::class,
         ConvertMarkdownToHtml::class,
         StyleTables::class,
+        ConvertImageLinks::class,
         ConvertWikilinks::class,
     ];
 

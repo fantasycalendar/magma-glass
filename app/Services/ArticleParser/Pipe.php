@@ -7,10 +7,10 @@ use Closure;
 
 abstract class Pipe
 {
-    public function handle(Article $articleContent, Closure $next): Article
+    public function handle(Article $article, Closure $next): Article
     {
-        return $next($this->parse($articleContent));
+        return $next($this->parse($article));
     }
 
-    public abstract function parse(Article $articleContent): Article;
+    public abstract function parse(Article $article): Article;
 }
