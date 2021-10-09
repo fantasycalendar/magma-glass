@@ -30,4 +30,9 @@ class ArticleController extends Controller
             'results' => ArticleCache::allWithTag($request->input('tag'))
         ]);
     }
+
+    public function linkData()
+    {
+        return ArticleCache::populate();
+    }
 }
