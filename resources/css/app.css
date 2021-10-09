@@ -18,7 +18,7 @@
     }
 
     :not(li) > p {
-        @apply mb-4;
+        @apply pt-2;
     }
 
     ul {
@@ -30,7 +30,7 @@
     }
 
     li li {
-        @apply pl-3
+        @apply pl-3 pt-1;
     }
 
     table {
@@ -39,5 +39,28 @@
 
     [x-cloak] {
         display: none !important;
+    }
+
+    #article-content > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(:first-child) {
+        @apply pt-2;
+    }
+
+    #article-content > h1:not(:first-child) {
+        @apply pt-8;
+    }
+    #article-content > h2:not(:first-child) {
+        @apply pt-6;
+    }
+    #article-content > h3:not(:first-child) {
+        @apply pt-5;
+    }
+    #article-content > h4:not(:first-child) {
+        @apply pt-3;
+    }
+    #article-content > h5:not(:first-child) {
+        @apply pt-2;
+    }
+    #article-content > h6:not(:first-child) {
+        @apply pt-2;
     }
 }

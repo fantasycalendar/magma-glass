@@ -17,7 +17,7 @@
     </x-slot>
 
     <div class="bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white dark:bg-gray-700">
+        <div class="p-6 bg-white dark:bg-gray-700" id="article-content">
             {!! $article->getParsed() !!}
         </div>
     </div>
