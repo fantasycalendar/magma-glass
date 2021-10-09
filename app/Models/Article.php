@@ -3,18 +3,21 @@
 namespace App\Models;
 
 use App\Services\ArticleParser\ArticlePipeline;
+use Illuminate\Support\Collection;
 
 class Article
 {
     public string $content;
     public string $name;
     public string $path;
+    public Collection $tags;
 
-    public function __construct($name, $path, $contents)
+    public function __construct($name, $path, $contents, $tags = [])
     {
         $this->name = $name;
         $this->content = $contents;
         $this->path = $path;
+        $this->tags = collect($tags);
     }
 
     /**

@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/image/{path}', [\App\Http\Controllers\ImageController::class, 'image'])->name('image');
+Route::get('/tag/', [\App\Http\Controllers\ArticleController::class, 'tag'])->name('tag');
 Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
-Route::get('/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('index')->where('articlePath', '.*');
+Route::get('/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
 
 require __DIR__.'/auth.php';

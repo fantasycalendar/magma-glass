@@ -8,6 +8,7 @@
         <title>{{ $page_title ?? config('app.name', 'Laravel') }}</title>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
@@ -136,13 +137,13 @@
 
         <div class="hidden md:flex md:flex-shrink-0">
             <div class="flex flex-col w-64 md:w-80 2xl:w-96">
-                <div class="flex-1 flex flex-col min-h-0 bg-white dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
+                <div class="flex-1 flex flex-col min-h-0 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-600">
                     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                         <div class="flex items-center flex-shrink-0 px-4 text-center">
                             <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                             <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
-                        <nav class="mt-5 flex-1 px-2 bg-white dark:bg-gray-700 space-y-1" x-data="fileTree()">
+                        <nav class="mt-5 flex-1 px-2 bg-white dark:bg-gray-800 space-y-1" x-data="fileTree()">
                             <ul class="ml-0 list-none">
                                 <template x-for="(file, i) in files">
                                     <li x-html="renderLevel(file, i)"></li>
@@ -150,12 +151,12 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
+                    <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-800 text-gray-400 font-medium dark:font-light p-4">
                         <div class="grid place-items-center">
                             {{ $page_name ?? config('app.name') }}
                         </div>
                         <div>
-                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
+                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                         </div>
                     </div>
                 </div>

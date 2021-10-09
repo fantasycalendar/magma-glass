@@ -13,35 +13,35 @@
         @apply text-xl;
     }
 
-    a {
+    #article-content a {
         @apply text-blue-500;
     }
 
-    :not(li) > p {
+    #article-content :not(li) > p {
         @apply pt-2;
     }
 
-    ul {
+    #article-content ul {
         @apply list-disc ml-8;
     }
 
-    ol {
+    #article-content ol {
         @apply list-decimal ml-8;
     }
 
-    li li {
+    #article-content li li {
         @apply pl-3 pt-1;
     }
 
-    table {
+    #article-content table {
         @apply table-auto;
     }
 
-    [x-cloak] {
+    #article-content [x-cloak] {
         display: none !important;
     }
 
-    #article-content > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(:first-child) {
+    #article-content > :not(div):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(:first-child) {
         @apply pt-2;
     }
 

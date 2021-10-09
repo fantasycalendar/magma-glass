@@ -13,21 +13,60 @@ class ArticleCache
     public static function populate()
     {
         return cache()->remember('articles_cache', config('magmaglass.cache_ttl'), function() {
-            return static::loadDirectory('/');
+            $articles = collect(static::loadDirectory('/'));
+
+            return [
+                'articles' => $articles,
+                'links' => self::buildLinks($articles)
+            ];
         });
+    }
+
+    public static function allWithTag($tag)
+    {
+        return static::populate()['articles']->filter(function($article) use ($tag) {
+            return $article['tags']->contains($tag);
+        });
+    }
+
+    public static function buildLinks($articles)
+    {
+        return $articles->map(function($article) {
+            $links = [];
+
+            foreach($article['links'] as $link) {
+                $links[] = [$article['title'], $link];
+            }
+
+            return $links;
+        })->values()->flatten(1);
     }
 
     public static function loadDirectory(string $directory): array
     {
         return collect(Storage::disk('articles')->allFiles())
             ->reject(fn($path) => Str::startsWith($path, '.obsidian/'))
-            ->mapWithKeys(fn($path) => [basename($path) => $path])
+            ->mapWithKeys(function($path) {
+                $article = static::getByArticlePath($path);
+                $content = Str::of($article->content);
+                $tags = $content->matchAll('/(#+[a-zA-Z0-9(_)]{1,})/m');
+                $links = $content->matchAll('/\[\[(.+?)\]\]/u')->reject(fn($string) => Str::endsWith($string, ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif', '.tiff']));
+
+                return [
+                    basename($path) => [
+                        'path' => $path,
+                        'title' => pathinfo($path)['filename'],
+                        'tags' => $tags,
+                        'links' => $links
+                    ]
+                ];
+            })
             ->toArray();
     }
 
     public static function hasArticle($articleName): bool
     {
-        return Arr::exists(static::populate(), $articleName . '.md');
+        return static::populate()['articles']->has($articleName . '.md');
     }
 
     /**
@@ -40,12 +79,13 @@ class ArticleCache
      */
     public static function getByArticleName($articleName): Article
     {
-        $articlePath = collect(static::populate())->get($articleName . '.md');
+        $info = static::populate()->get($articleName . '.md');
+        $articlePath = $info['path'];
         if(!Storage::disk('articles')->exists($articlePath)) {
             throw new ArticleNotFoundException("No article '$articleName' was found.");
         }
 
-        return new Article($articleName, $articlePath, Storage::disk('articles')->get($articlePath));
+        return new Article($articleName, $articlePath, Storage::disk('articles')->get($articlePath), $info['tags']);
     }
 
     /**
@@ -57,7 +97,9 @@ class ArticleCache
      */
     public static function getByArticlePath($articlePath): Article
     {
-        $localPath = $articlePath . '.md';
+        $localPath = Str::endsWith($articlePath, '.md')
+            ? $articlePath
+            : $articlePath . '.md';
 
         $fullArticlePath = Storage::disk('articles')->path($localPath);
         if(!Storage::disk('articles')->exists($localPath)) {
@@ -75,6 +117,6 @@ class ArticleCache
 
     public static function hasImage(string $imageName)
     {
-        return Arr::has(static::populate(), $imageName);
+        return static::populate()['articles']->has($imageName);
     }
 }

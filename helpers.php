@@ -11,9 +11,9 @@ if(!function_exists('wikilink')) {
             return route('image', $linkname);
         }
 
-        if(Arr::has($cache, $linkname.".md")) {
-            $path = Arr::get($cache, $linkname.".md");
-            return route('index', ['articlePath' => Str::substr($path, 0, Str::length($path) - 3)]);
+        if(Arr::has($cache['articles'], $linkname.".md")) {
+            $path = Arr::get($cache['articles'], $linkname.".md")['path'];
+            return route('article', ['articlePath' => Str::substr($path, 0, Str::length($path) - 3)]);
         }
 
         return route('no_such_article', ['articlePath' => $linkname]);
