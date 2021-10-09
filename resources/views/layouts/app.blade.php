@@ -47,7 +47,7 @@
 
 
                         let html = `<a :href="(file.children ? '#' : file.filename)"
-                                       class="text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white group flex items items-center px-3 py-2 text-sm font-medium rounded-sm"
+                                       class="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white group flex items items-center px-3 py-2 text-sm font-medium rounded-sm"
                                        :class="{'has-children':file.children}"
                                        x-html="(file.children ? '${folderIcon}' : '${fileIcon}') + ' ' + file.title" ${ obj.children ? `@click.prevent="toggleLevel($refs.${ref})"` : '' }></a>`;
 
@@ -137,13 +137,13 @@
 
         <div class="hidden md:flex md:flex-shrink-0">
             <div class="flex flex-col w-64 md:w-80 2xl:w-96">
-                <div class="flex-1 flex flex-col min-h-0 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-600">
+                <div class="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
                     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                         <div class="flex items-center flex-shrink-0 px-4 text-center">
                             <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                             <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
-                        <nav class="mt-5 flex-1 px-2 bg-white dark:bg-gray-800 space-y-1" x-data="fileTree()">
+                        <nav class="mt-5 flex-1 px-2 bg-gray-50 dark:bg-gray-700 space-y-1" x-data="fileTree()">
                             <ul class="ml-0 list-none">
                                 <template x-for="(file, i) in files">
                                     <li x-html="renderLevel(file, i)"></li>
@@ -151,12 +151,12 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-800 text-gray-400 font-medium dark:font-light p-4">
+                    <div class="flex-shrink-0 flex justify-between align-middle bg-gray-50 dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
                         <div class="grid place-items-center">
                             {{ $page_name ?? config('app.name') }}
                         </div>
                         <div>
-                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-800 dark:hover:bg-gray-700 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
+                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-600 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                     {{ $mobile_header }}
                 </div>
             </div>
-            <main class="bg-gray-100 dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
+            <main class="bg-white dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
                 <div class="py-6 text-gray-700 dark:text-white">
                     <div class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8">
                         {{ $header }}

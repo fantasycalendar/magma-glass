@@ -25,6 +25,7 @@ module.exports = {
         extend: {
             opacity: ['disabled'],
             display: ['dark'],
+            padding: ['dark'],
         },
     },
 

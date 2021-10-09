@@ -16,8 +16,8 @@
         <hr class="border-gray-300 dark:border-gray-700 my-8">
     </x-slot>
 
-    <div class="bg-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white dark:bg-gray-700" id="article-content">
+    <div class="bg-white dark:bg-gray-800 overflow-hidden">
+        <div class="px-0 bg-white dark:bg-gray-800" id="article-content">
             {!! $article->getParsed() !!}
         </div>
     </div>
