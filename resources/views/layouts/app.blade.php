@@ -7,14 +7,11 @@
 
         <title>{{ $page_title ?? config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 
-        <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         <script>
@@ -98,47 +95,14 @@
         </script>
     </head>
     <body id="app" class="font-sans antialiased" x-data="{ 'sidebar': false, 'loaded': false, 'theme': localStorage.theme }">
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
-        <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
-            <!--
-              Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-              Entering: "transition-opacity ease-linear duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-              Leaving: "transition-opacity ease-linear duration-300"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
             <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
 
-            <!--
-              Off-canvas menu, show/hide based on off-canvas menu state.
-
-              Entering: "transition ease-in-out duration-300 transform"
-                From: "-translate-x-full"
-                To: "translate-x-0"
-              Leaving: "transition ease-in-out duration-300 transform"
-                From: "translate-x-0"
-                To: "-translate-x-full"
-            -->
             <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-gray-700 transition ease-in-out duration-300 transform" :class="{ 'translate-x-0': sidebar, '-translate-x-full': !sidebar }" x-cloak>
-                <!--
-                  Close button, show/hide based on off-canvas menu state.
-
-                  Entering: "ease-in-out duration-300"
-                    From: "opacity-0"
-                    To: "opacity-100"
-                  Leaving: "ease-in-out duration-300"
-                    From: "opacity-100"
-                    To: "opacity-0"
-                -->
                 <div class="absolute top-0 right-0 -mr-12 pt-2" :class="{ 'hidden': !sidebar }">
                     <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebar = !sidebar">
                         <span class="sr-only">Close sidebar</span>
-                        <!-- Heroicon name: outline/x -->
                         <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -167,19 +131,16 @@
                 </div>
             </div>
 
-            <div class="flex-shrink-0 w-14">
-                <!-- Force sidebar to shrink to fit close icon -->
-            </div>
+            <div class="flex-shrink-0 w-14"></div> <!-- Force sidebar to shrink to fit close icon -->
         </div>
 
-        <!-- Static sidebar for desktop -->
         <div class="hidden md:flex md:flex-shrink-0">
             <div class="flex flex-col w-64 md:w-80 2xl:w-96">
-                <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex-1 flex flex-col min-h-0 bg-white dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
                     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                         <div class="flex items-center flex-shrink-0 px-4 text-center">
-                            <img class="h-18 mx-auto" src="{{ asset('images/logo.png') }}" alt="Workflow">
+                            <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
+                            <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
                         <nav class="mt-5 flex-1 px-2 bg-white dark:bg-gray-700 space-y-1" x-data="fileTree()">
                             <ul class="ml-0 list-none">
@@ -204,7 +165,6 @@
             <div class="md:hidden flex justify-start align-items-middle pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100 shadow dark:shadow-none dark: bg-gray-700">
                 <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" @click="sidebar = !sidebar">
                     <span class="sr-only">Open sidebar</span>
-                    <!-- Heroicon name: outline/menu -->
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
