@@ -188,10 +188,10 @@
             </div>
         </div>
 
-        <div class="image-modal-wrapper absolute top-0 left-0 right-0 bottom-0 bg-gray-500 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-70 max-h-screen max-w-screen" :class="{ 'hidden': !open }" x-data="{ open: false, image: '' }" @open-image.window="console.log($event); image = $event.detail; open = true;" @close-image.window="open = false; image = ''" x-cloak>
+        <div class="image-modal-wrapper absolute top-0 left-0 right-0 bottom-0 bg-gray-500 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-70 max-h-screen max-w-screen" x-show="showingImage" x-transition x-data="{ showingImage: false, shownImage: '', showImage: function($event) { console.log($event); this.shownImage = $event.detail; this.showingImage = true; console.log(this); }, hideImage: function($event) { console.log($event); this.showingImage = false; this.image = ''; } }" @open-image.window="showImage" @close-image.window="hideImage" x-cloak>
             <div id="image-modal" class="min-h-full min-w-full max-w-screen max-h-screen overflow-y-auto grid place-items-center cursor-pointer">
-                <i class="fa fa-times p-6 text-gray-900 dark:text-gray-200 cursor-pointer absolute top-0 right-0" @click="open = false; image = ''"></i>
-                <img :src="image" alt="" class="m-6 cursor-default shadow-lg" @click.away="open = false; image = ''">
+                <i class="fa fa-times p-6 text-gray-900 dark:text-gray-200 cursor-pointer absolute top-0 right-0" @click="hideImage"></i>
+                <img :src="shownImage" alt="" class="m-6 cursor-default shadow-lg" @click.away="hideImage">
             </div>
         </div>
     </body>
