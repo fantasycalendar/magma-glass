@@ -13,7 +13,7 @@ if(!function_exists('wikilink')) {
 
         if(Arr::has($cache['articles'], $linkname.".md")) {
             $path = Arr::get($cache['articles'], $linkname.".md")['path'];
-            return route('article', ['articlePath' => Str::substr($path, 0, Str::length($path) - 3)]);
+            return Str::substr($path, 0, Str::length($path) - 3);
         }
 
         return route('no_such_article', ['articlePath' => $linkname]);

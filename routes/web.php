@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('test', function(){
+//    dd(\App\Services\MenuBuilder::build());
+//});
+Route::view('test', 'test');
 Route::get('/image/{path}', [\App\Http\Controllers\ImageController::class, 'image'])->name('image');
 Route::get('/tag', [\App\Http\Controllers\ArticleController::class, 'tag'])->name('tag');
 Route::get('/linkData', [\App\Http\Controllers\ArticleController::class, 'linkData'])->name('linkData');
-Route::get('/get-article/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'articleJson'])->name('articleJson');
+Route::get('/get-article/', [\App\Http\Controllers\ArticleController::class, 'articleJson'])->name('articleJson');
 Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
 Route::get('/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
 

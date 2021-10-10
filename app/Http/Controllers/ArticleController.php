@@ -12,17 +12,18 @@ class ArticleController extends Controller
     {
         return view('show_article', [
             'isIndex' => $articlePath == '',
-            'article' => RetrieveArticle::dispatchSync($articlePath)
+//            'article' => RetrieveArticle::dispatchSync(urldecode($articlePath))
         ]);
     }
 
-    public function articleJson($articlePath = '')
+    public function articleJson(Request $request)
     {
-        $article = RetrieveArticle::dispatchSync($articlePath);
+        $article = RetrieveArticle::dispatchSync($request->input('articlePath') ?? '');
 
         return [
             'title' => $article->name,
             'content' => $article->getParsed(),
+            'path' => $request->input('articlePath') ?? '',
             'links' => ArticleCache::populate()['links']
         ];
     }

@@ -14,21 +14,29 @@ class MenuBuilder
         'jpeg' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
         'gif' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
         'pdf' => 'fa-file-pdf text-red-400 dark:text-red-500 group-hover:text-red-500 dark:group-hover:text-red-300',
+        'folder' => 'fa-folder text-yellow-400 dark:text-yellow-600 group-hover:text-yellow-500 dark:group-hover:text-orange-300'
     ];
 
-    public static function build(): array
+    public static function build()
     {
-        return static::createStructure('/');
+        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
+        return cache()->remember('file_tree', config('magmaglass.cache_ttl'), function() {
+            logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
+            return static::createStructure('/');
+        });
     }
 
-    private static function createStructure(string $path): array
+    private static function createStructure(string $path)
     {
+        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         $directories = collect(Storage::disk('articles')->directories($path))
             ->reject(fn($path) => Str::startsWith($path, '.obsidian'))
             ->map(function($directory){
             return [
                 'title' => basename($directory),
-                'children' => static::createStructure($directory)
+                'children' => static::createStructure($directory),
+                'icon' => static::$icons['folder'],
+                'path' => $directory
             ];
         });
 
@@ -41,11 +49,16 @@ class MenuBuilder
 
             return [
                 'title' => $title,
-                'filename' => wikilink($title),
-                'icon' => $icon
+                'url' => wikilink($title),
+                'icon' => $icon,
+                'path' => $file
             ];
         });
 
-        return $directories->merge($files)->toArray();
+        return $directories->merge($files)->map(function($item){
+            $item['hash'] = sha1($item['path']);
+
+            return $item;
+        });
     }
 }

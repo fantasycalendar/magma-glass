@@ -40,28 +40,6 @@
 
             let fileTree = function() {
                 return {
-                    files: @json($menuJson),
-                    renderLevel: function(obj,i){
-                        let ref = 'l'+Math.random().toString(36).substring(7);
-                        let folderIcon = "<i class=\\'fa text-yellow-400 dark:text-yellow-600 group-hover:text-yellow-500 dark:group-hover:text-orange-300 mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4 fa-folder\\'></i>";
-                        let fileIcon = "<i class=\\'fa mr-3 text-center align-middle flex-shrink-0 h-100 w-100 inline-block w-4 h-4\\' :class=\\'file.icon\\'></i>";
-
-
-                        let html = `<a :href="(file.children ? '#' : file.filename)"
-                                       class="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white group flex items items-center px-3 py-2 text-sm font-medium rounded-sm"
-                                       :class="{'has-children':file.children}"
-                                       x-html="(file.children ? '${folderIcon}' : '${fileIcon}') + ' ' + file.title" ${ obj.children ? `@click.prevent="toggleLevel($refs.${ref})"` : '' }></a>`;
-
-                        if(obj.children) {
-                            html += `<ul style="display:none;" x-ref="${ref}" class="pl-2 pb-1 ml-0 transition-all duration-150 opacity-0 list-none">
-                            <template x-for='(file,i) in file.children'>
-                                <li x-html="renderLevel(file,i)"></li>
-                            </template>
-                        </ul>`;
-                        }
-
-                        return html;
-                    },
                     showLevel: function(el) {
                         if (el.style.length === 1 && el.style.display === 'none') {
                             el.removeAttribute('style')
@@ -86,6 +64,7 @@
                         }
                     },
                     toggleLevel: function(el) {
+                        console.log(el);
                         if( el.style.length && el.style.display === 'none' ) {
                             this.showLevel(el);
                         } else {
@@ -94,9 +73,43 @@
                     }
                 }
             }
+
+            let app = {
+                'sidebar': false,
+                'loaded': false,
+                'theme': localStorage.theme,
+                'article': {
+                    title: 'Loading',
+                    content: 'Loading...'
+                },
+                init() {
+                    console.log('Initing');
+                    this.updateArticle(decodeURI(location.pathname).substr(1))
+                },
+                updateArticle(path) {
+                    axios.get('/get-article/', {
+                            params: {
+                                articlePath: path
+                            }
+                        }).then(response => {
+                            if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
+
+                            return response.data;
+                        }).then(data => {
+                            this.article = {
+                                title: data.title,
+                                content: data.content
+                            }
+                    });
+
+                    if(location.origin + '/' + encodeURI(path) !== window.location.href) {
+                        history.pushState(null, document.title, location.origin + '/' + path);
+                    }
+                }
+            }
         </script>
     </head>
-    <body id="app" class="font-sans antialiased" x-data="{ 'sidebar': false, 'loaded': false, 'theme': localStorage.theme, 'article': {title: 'Loading', content: 'Loading...'}, }">
+    <body id="app" class="font-sans antialiased" x-data="app" @article-change.window="updateArticle($event.detail)">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
             <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
@@ -116,17 +129,10 @@
                             <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                             <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
-                        <nav class="mt-5 px-2 space-y-1" x-data="fileTree()">
-                            <ul class="ml-0 list-none">
-                                <template x-for="(file, i) in files">
-                                    <li x-html="renderLevel(file, i)"></li>
-                                </template>
-                            </ul>
-                        </nav>
+                        <x-file-tree></x-file-tree>
                     </div>
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
                         <div class="grid place-items-center" x-html="article.title">
-                            {{ $page_name ?? config('app.name') }}
                         </div>
                         <div>
                             <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
@@ -145,13 +151,7 @@
                                 <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                                 <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                             </div>
-                            <nav class="mt-5 flex-1 px-2 bg-gray-50 dark:bg-gray-700 space-y-1" x-data="fileTree()">
-                                <ul class="ml-0 list-none">
-                                    <template x-for="(file, i) in files">
-                                        <li x-html="renderLevel(file, i)"></li>
-                                    </template>
-                                </ul>
-                            </nav>
+                            <x-file-tree></x-file-tree>
                         </div>
                         <div class="flex-shrink-0 flex justify-between align-middle bg-gray-50 dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
                             <div class="grid place-items-center">
@@ -179,11 +179,10 @@
                 <main class="bg-white dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
                     <div class="py-6 text-gray-700 dark:text-white">
                         <div class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8">
-                            {{ $header }}
+                            <h1 class="text-4xl" x-html="article.title"><strong>{{ config('app.name') }}</strong></h1>
                         </div>
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                            {{ $slot }}
-                        </div>
+                        <hr class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8 border-gray-300 dark:border-gray-700 my-8">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" id="article-content" x-html="article.content"></div>
                     </div>
                 </main>
             </div>
