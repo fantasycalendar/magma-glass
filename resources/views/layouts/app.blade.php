@@ -96,7 +96,7 @@
             }
         </script>
     </head>
-    <body id="app" class="font-sans antialiased" x-data="{ 'sidebar': false, 'loaded': false, 'theme': localStorage.theme }">
+    <body id="app" class="font-sans antialiased" x-data="{ 'sidebar': false, 'loaded': false, 'theme': localStorage.theme, 'article': {title: 'Loading', content: 'Loading...'}, }">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
             <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
@@ -125,7 +125,7 @@
                         </nav>
                     </div>
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
-                        <div class="grid place-items-center">
+                        <div class="grid place-items-center" x-html="article.title">
                             {{ $page_name ?? config('app.name') }}
                         </div>
                         <div>

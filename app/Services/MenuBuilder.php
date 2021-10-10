@@ -35,11 +35,14 @@ class MenuBuilder
         $files = collect(Storage::disk('articles')->files($path))->map(function($file){
             $fileInfo = pathinfo($file);
             $title = $fileInfo['filename'];
+            $icon = $title == 'Home'
+                ? 'fa-home'
+                : self::$icons[$fileInfo['extension']];
 
             return [
                 'title' => $title,
                 'filename' => wikilink($title),
-                'icon' => self::$icons[$fileInfo['extension']]
+                'icon' => $icon
             ];
         });
 

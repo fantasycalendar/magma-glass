@@ -16,6 +16,17 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function articleJson($articlePath = '')
+    {
+        $article = RetrieveArticle::dispatchSync($articlePath);
+
+        return [
+            'title' => $article->name,
+            'content' => $article->getParsed(),
+            'links' => ArticleCache::populate()['links']
+        ];
+    }
+
     public function noSuchArticle(Request $request)
     {
         $article = $request->get('articlePath');
