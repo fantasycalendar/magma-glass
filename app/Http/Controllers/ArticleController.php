@@ -18,6 +18,7 @@ class ArticleController extends Controller
 
     public function articleJson(Request $request)
     {
+        logger()->debug('-------------new request!------------');
         $article = RetrieveArticle::dispatchSync($request->input('articlePath') ?? '');
 
         return [

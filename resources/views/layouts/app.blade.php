@@ -86,7 +86,9 @@
                     console.log('Initing');
                     this.updateArticle(decodeURI(location.pathname).substr(1))
                 },
-                updateArticle(path) {
+                updateArticle(path, back = false) {
+                    console.log("Asked to update article to " + path);
+
                     axios.get('/get-article/', {
                             params: {
                                 articlePath: path
@@ -102,14 +104,14 @@
                             }
                     });
 
-                    if(location.origin + '/' + encodeURI(path) !== window.location.href) {
+                    if(!back && location.origin + '/' + path !== window.location.href) {
                         history.pushState(null, document.title, location.origin + '/' + path);
                     }
                 }
             }
         </script>
     </head>
-    <body id="app" class="font-sans antialiased" x-data="app" @article-change.window="updateArticle($event.detail)">
+    <body id="app" class="font-sans antialiased" x-data="app" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(1), true)">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
             <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
