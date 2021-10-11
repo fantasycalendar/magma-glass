@@ -9,8 +9,8 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [ ] Allow marking certain folders as private
   - [ ] Parsing/syntax highlighting of code blocks?
 - [x] Have a traversible menu structure
-- [ ] Search
-  - [ ] Needs to be quick and responsive
+- [x] Search
+  - [x] Needs to be quick and responsive
 - [ ] Update your Obsidian from a webhook
   - [ ] Github webhook-on-commit -> Notifies Magma Glass -> Pulls your repo and updates it.
   - [ ] Safely, with rollback
