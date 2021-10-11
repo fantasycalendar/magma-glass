@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\RetrieveArticle;
 use App\Services\ArticleCache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -46,5 +47,12 @@ class ArticleController extends Controller
     public function linkData()
     {
         return ArticleCache::populate();
+    }
+
+    public function search()
+    {
+        return ArticleCache::populate()['articles']->filter(function($article){
+            return Str::contains(strtolower($article['title']), strtolower(request()->input('searchTerm')));
+        })->values();
     }
 }

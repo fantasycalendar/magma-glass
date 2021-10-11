@@ -38,50 +38,17 @@
                 console.log(document.documentElement.classList);
             }
 
-            let fileTree = function() {
-                return {
-                    showLevel: function(el) {
-                        if (el.style.length === 1 && el.style.display === 'none') {
-                            el.removeAttribute('style')
-                        } else {
-                            el.style.removeProperty('display')
-                        }
-                        setTimeout(()=>{
-                            el.previousElementSibling.querySelector('i.fa').classList.add("fa-folder-open");
-                            el.previousElementSibling.querySelector('i.fa').classList.remove("fa-folder");
-                            el.classList.add("opacity-100");
-                        },10)
-                    },
-                    hideLevel: function(el) {
-                        el.style.display = 'none';
-                        el.classList.remove("opacity-100");
-                        el.previousElementSibling.querySelector('i.fa').classList.remove("fa-folder-open");
-                        el.previousElementSibling.querySelector('i.fa').classList.add("fa-folder");
-
-                        let refs = el.querySelectorAll('ul[x-ref]');
-                        for (var i = 0; i < refs.length; i++) {
-                            this.hideLevel(refs[i]);
-                        }
-                    },
-                    toggleLevel: function(el) {
-                        console.log(el);
-                        if( el.style.length && el.style.display === 'none' ) {
-                            this.showLevel(el);
-                        } else {
-                            this.hideLevel(el);
-                        }
-                    }
-                }
-            }
-
             let app = {
                 'sidebar': false,
                 'loaded': false,
                 'theme': localStorage.theme,
+                'searchTerm': '',
                 'article': {
                     title: 'Loading',
                     content: 'Loading...'
                 },
+                'searchResults': [],
+                'showSearchResults': false,
                 init() {
                     console.log('Initing');
                     this.updateArticle(decodeURI(location.pathname).substr(1))
@@ -107,6 +74,23 @@
                     if(!back && location.origin + '/' + path !== window.location.href) {
                         history.pushState(null, document.title, location.origin + '/' + path);
                     }
+
+                    this.sidebar = false;
+                },
+                fetchSearchResults($event) {
+                    axios.get('/search/', {
+                        params: {
+                            searchTerm: this.searchTerm
+                        }
+                    }).then(response => {
+                        if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
+
+                        return response.data;
+                    }).then(data => {
+                        this.searchResults = data;
+                        console.log(data);
+                    });
+
                 }
             }
         </script>
@@ -152,6 +136,7 @@
                                 <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                                 <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                             </div>
+                            <x-article-search :keyboardShortcut="true"></x-article-search>
                             <x-file-tree></x-file-tree>
                         </div>
                         <div class="flex-shrink-0 flex justify-between align-middle bg-gray-50 dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
