@@ -38,6 +38,35 @@
                 console.log(document.documentElement.classList);
             }
 
+            function setWithExpiry(key, value, ttl) {
+                const item = {
+                    value: value,
+                    expiry: new Date().getTime() + ttl,
+                }
+
+                console.log("Storing " + key + " as:");
+                console.log(item);
+                localStorage.setItem(key, JSON.stringify(item))
+            }
+
+            function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+                console.log("Retrieved " + key + " as:");
+                console.log(itemStr);
+
+                if (!itemStr) {
+                    return null
+                }
+
+                const item = JSON.parse(itemStr)
+
+                if (new Date().getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return null
+                }
+                return item.value
+            }
+
             let app = {
                 'sidebar': false,
                 'loaded': false,
@@ -51,12 +80,53 @@
                 'showSearchResults': false,
                 init() {
                     console.log('Initing');
-                    this.updateArticle(decodeURI(location.pathname).substr(1))
+                    let storageID = 'article_content_cache.' + decodeURI(location.pathname);
+
+                    let storedArticle = getWithExpiry(storageID);
+                    if(storedArticle !== null) {
+                        this.article = {
+                            title: storedArticle.title,
+                            content: storedArticle.content,
+                        }
+                        this.loaded = true;
+                        console.log("loaded from cache!");
+                    }
+
+                    console.log("Stored article was ");
+                    console.log(storedArticle);
+                },
+                postInit() {
+                    let currentItem;
+                    let currentKey;
+
+                    for (let i = 0; i < localStorage.length; i++){
+                        currentItem = localStorage.getItem(localStorage.key(i));
+                        currentKey = localStorage.key(i);
+
+                        if (currentItem.includes("expiry")) {
+                            getWithExpiry(currentKey);
+                        }
+                    }
+
+                    if(!this.loaded) {
+                        console.log("We didn't load from cache, fetch it.");
+                        this.updateArticle(decodeURI(location.pathname).substr(1))
+                        this.loaded = true;
+                    }
                 },
                 updateArticle(path, back = false) {
                     console.log("Asked to update article to " + path);
+                    if(path.endsWith('.md')) {
+                        path = path.substr(0, path.length - 3);
+                    }
 
-                    axios.get('/get-article/', {
+                    let storedArticle = getWithExpiry('article_content_cache./' + path);
+
+                    if (storedArticle !== null) {
+                        console.log("Got an article!");
+                        this.article = storedArticle;
+                    } else {
+                        axios.get('/get-article/', {
                             params: {
                                 articlePath: path
                             }
@@ -69,7 +139,11 @@
                                 title: data.title,
                                 content: data.content
                             }
-                    });
+
+                            setWithExpiry('article_content_cache.' + decodeURI(location.pathname), this.article, 300000);
+                        });
+                    }
+
 
                     if(!back && location.origin + '/' + path !== window.location.href) {
                         history.pushState(null, document.title, location.origin + '/' + path);
@@ -95,7 +169,7 @@
             }
         </script>
     </head>
-    <body id="app" class="font-sans antialiased" x-data="app" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(1), true)">
+    <body id="app" class="font-sans antialiased" x-data="app" x-init="$nextTick(() => {postInit();});" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(1), true)">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
             <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>

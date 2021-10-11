@@ -5301,7 +5301,6 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 });
 (0,hotkeys_js__WEBPACK_IMPORTED_MODULE_1__["default"])('ctrl+shift+l', function (event, handler) {
   event.preventDefault();
-  console.log("Ctrl+Shift+L pressed");
   window.toggleTheme();
 });
 

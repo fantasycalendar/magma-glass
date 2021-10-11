@@ -60,7 +60,7 @@
         @apply pt-2;
     }
 
-    input:not(:focus) + .search-results {
-        display: none;
-    }
+    /*input:not(:focus) + .search-results {*/
+    /*    display: none;*/
+    /*}*/
 }
