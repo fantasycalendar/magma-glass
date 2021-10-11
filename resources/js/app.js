@@ -13,6 +13,5 @@ hotkeys('ctrl+k', function(event, handler){
 
 hotkeys('ctrl+shift+l', function(event, handler){
     event.preventDefault();
-    console.log("Ctrl+Shift+L pressed");
     window.toggleTheme();
 });
