@@ -11,9 +11,7 @@ class ArticleCache
 {
     public static function populate()
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return cache()->remember('articles_cache', config('magmaglass.cache_ttl'), function() {
-            logger()->debug('we what?');
             $articles = collect(static::loadDirectory('/'));
 
             return [
@@ -25,7 +23,6 @@ class ArticleCache
 
     public static function allWithTag($tag)
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return static::populate()['articles']->filter(function($article) use ($tag) {
             return $article['tags']->contains($tag);
         });
@@ -33,7 +30,6 @@ class ArticleCache
 
     public static function buildLinks($articles)
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return $articles->map(function($article) {
             $links = [];
 
@@ -47,7 +43,6 @@ class ArticleCache
 
     public static function loadDirectory(string $directory): array
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return collect(Storage::disk('articles')->allFiles())
             ->reject(fn($path) => Str::startsWith($path, '.obsidian/'))
             ->mapWithKeys(function($path) {
@@ -69,7 +64,6 @@ class ArticleCache
 
     public static function hasArticle($articleName): bool
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return static::populate()['articles']->has($articleName . '.md');
     }
 
@@ -83,7 +77,6 @@ class ArticleCache
      */
     public static function getByArticleName($articleName): Article
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         $info = static::populate()->get($articleName . '.md');
         $articlePath = $info['path'];
         if(!Storage::disk('articles')->exists($articlePath)) {
@@ -102,7 +95,6 @@ class ArticleCache
      */
     public static function getByArticlePath($articlePath): Article
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         $localPath = Str::endsWith($articlePath, '.md')
             ? $articlePath
             : $articlePath . '.md';
@@ -123,7 +115,6 @@ class ArticleCache
 
     public static function hasImage(string $imageName)
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return static::populate()['articles']->has($imageName);
     }
 }

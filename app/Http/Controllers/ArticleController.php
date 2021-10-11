@@ -11,8 +11,7 @@ class ArticleController extends Controller
     public function index($articlePath = '')
     {
         return view('show_article', [
-            'isIndex' => $articlePath == '',
-//            'article' => RetrieveArticle::dispatchSync(urldecode($articlePath))
+            'isIndex' => $articlePath == ''
         ]);
     }
 

@@ -19,16 +19,13 @@ class MenuBuilder
 
     public static function build()
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         return cache()->remember('file_tree', config('magmaglass.cache_ttl'), function() {
-            logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
             return static::createStructure('/');
         });
     }
 
     private static function createStructure(string $path)
     {
-        logger()->debug('Entered ' . static::class . '::' . __FUNCTION__);
         $directories = collect(Storage::disk('articles')->directories($path))
             ->reject(fn($path) => Str::startsWith($path, '.obsidian'))
             ->map(function($directory){

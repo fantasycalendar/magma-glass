@@ -134,8 +134,7 @@
                         <x-file-tree></x-file-tree>
                     </div>
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
-                        <div class="grid place-items-center" x-html="article.title">
-                        </div>
+                        <div class="grid place-items-center" x-html="article.title"></div>
                         <div>
                             <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                         </div>

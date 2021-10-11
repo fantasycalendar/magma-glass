@@ -5,10 +5,10 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
 - [x] Parse Obsidian's markdown files (directly, no databases or middlemen)
   - [x] Heavy use of cache if available
   - [x] Support relative wikilinks
-  - [ ] Support non-relative wikilinks
+  - [x] Support non-relative wikilinks
   - [ ] Allow marking certain folders as private
   - [ ] Parsing/syntax highlighting of code blocks?
-- [ ] Have a traversible menu structure
+- [x] Have a traversible menu structure
 - [ ] Search
   - [ ] Needs to be quick and responsive
 - [ ] Update your Obsidian from a webhook
