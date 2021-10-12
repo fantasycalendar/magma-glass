@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\ArticleNotFoundException;
 use App\Models\Article;
 use App\Services\ArticleParser\Pipeline\IsolateTags;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -13,7 +14,7 @@ class ArticleCache
     public static function populate()
     {
         return cache()->remember('articles_cache', config('magmaglass.cache_ttl'), function() {
-            $articles = collect(static::loadDirectory('/'));
+            $articles = collect(static::loadDirectory());
 
             return [
                 'articles' => $articles,
@@ -42,7 +43,7 @@ class ArticleCache
         })->values()->flatten(1);
     }
 
-    public static function loadDirectory(string $directory): array
+    public static function loadDirectory(): array
     {
         return collect(Storage::disk('articles')->allFiles())
             ->reject(fn($path) => Str::startsWith($path, '.obsidian/'))
@@ -56,7 +57,8 @@ class ArticleCache
                         'path' => $path,
                         'title' => pathinfo($path)['filename'],
                         'tags' => $tags,
-                        'links' => $links
+                        'links' => $links,
+                        'last_modified' => Carbon::parse(Storage::disk('articles')->lastModified($path))
                     ]
                 ];
             })

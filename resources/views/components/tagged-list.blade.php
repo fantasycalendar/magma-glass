@@ -33,7 +33,7 @@
                                 </svg>
                                 <p>
                                     Created On
-                                    <time datetime="2020-01-07">January 7, 2020</time>
+                                    <time datetime="{{ $article['last_modified']->format('Y-m-d') }}">{{ $article['last_modified']->format('F m, d') }}</time>
                                 </p>
                             </div>
                         </div>
