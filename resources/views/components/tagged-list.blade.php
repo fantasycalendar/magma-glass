@@ -33,7 +33,7 @@
                                 </svg>
                                 <p>
                                     Created On
-                                    <time datetime="{{ $article['last_modified']->format('Y-m-d') }}">{{ $article['last_modified']->format('F m, d') }}</time>
+                                    <time datetime="{{ $article['last_modified']->format('Y-m-d') }}">{{ $article['last_modified']->format('F m, Y') }}</time>
                                 </p>
                             </div>
                         </div>
