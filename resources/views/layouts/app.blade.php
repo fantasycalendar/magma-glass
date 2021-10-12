@@ -33,141 +33,11 @@
                 localStorage.theme = theme;
                 document.documentElement.classList.toggle('dark', theme === 'dark');
             }
-
-            function setWithExpiry(key, value, ttl) {
-                const item = {
-                    value: value,
-                    expiry: new Date().getTime() + ttl,
-                }
-
-                console.log("Storing " + key + " as:");
-                console.log(item);
-                localStorage.setItem(key, JSON.stringify(item))
-            }
-
-            function getWithExpiry(key) {
-                const itemStr = localStorage.getItem(key)
-                console.log("Retrieved " + key + " as:");
-                console.log(itemStr);
-
-                if (!itemStr) {
-                    return null
-                }
-
-                const item = JSON.parse(itemStr)
-
-                if (new Date().getTime() > item.expiry) {
-                    localStorage.removeItem(key)
-                    return null
-                }
-                return item.value
-            }
-
-            let app = {
-                'sidebar': false,
-                'loaded': false,
-                'theme': localStorage.theme,
-                'searchTerm': '',
-                'article': {
-                    title: 'Loading',
-                    content: 'Loading...'
-                },
-                'searchResults': [],
-                'showSearchResults': false,
-                init() {
-                    console.log('Initing');
-                    let storageID = 'article_content_cache.' + decodeURI(location.pathname);
-
-                    let storedArticle = getWithExpiry(storageID);
-                    if(storedArticle !== null) {
-                        this.article = {
-                            title: storedArticle.title,
-                            content: storedArticle.content,
-                        }
-                        this.loaded = true;
-                        console.log("loaded from cache!");
-                    }
-
-                    console.log("Stored article was ");
-                    console.log(storedArticle);
-                },
-                postInit() {
-                    let currentItem;
-                    let currentKey;
-
-                    for (let i = 0; i < localStorage.length; i++){
-                        currentItem = localStorage.getItem(localStorage.key(i));
-                        currentKey = localStorage.key(i);
-
-                        if (currentItem.includes("expiry")) {
-                            getWithExpiry(currentKey);
-                        }
-                    }
-
-                    if(!this.loaded) {
-                        console.log("We didn't load from cache, fetch it.");
-                        this.updateArticle(decodeURI(location.pathname).substr(1))
-                        this.loaded = true;
-                    }
-                },
-                updateArticle(path, back = false) {
-                    console.log("Asked to update article to " + path);
-                    if(path.endsWith('.md')) {
-                        path = path.substr(0, path.length - 3);
-                    }
-
-                    let storedArticle = getWithExpiry('article_content_cache./' + path);
-
-                    if (storedArticle !== null) {
-                        console.log("Got an article!");
-                        this.article = storedArticle;
-                    } else {
-                        axios.get('/get-article/', {
-                            params: {
-                                articlePath: path
-                            }
-                        }).then(response => {
-                            if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
-
-                            return response.data;
-                        }).then(data => {
-                            this.article = {
-                                title: data.title,
-                                content: data.content
-                            }
-
-                            setWithExpiry('article_content_cache.' + decodeURI(location.pathname), this.article, 300000);
-                        });
-                    }
-
-
-                    if(!back && location.origin + '/' + path !== window.location.href) {
-                        history.pushState(null, document.title, location.origin + '/' + path);
-                    }
-
-                    this.sidebar = false;
-                },
-                fetchSearchResults($event) {
-                    axios.get('/search/', {
-                        params: {
-                            searchTerm: this.searchTerm
-                        }
-                    }).then(response => {
-                        if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
-
-                        return response.data;
-                    }).then(data => {
-                        this.searchResults = data;
-                        console.log(data);
-                    });
-
-                }
-            }
         </script>
     </head>
-    <body id="app" class="font-sans antialiased" x-data="app" x-init="$nextTick(() => {postInit();});" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(1), true)">
+    <body id="app" class="font-sans antialiased" x-data="app" x-init="$nextTick(() => {postInit();});" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(2), true)">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
-            <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }">
+            <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }" x-cloak>
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
 
                 <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-gray-700 transition ease-in-out duration-300 transform" :class="{ 'translate-x-0': sidebar, '-translate-x-full': !sidebar }" x-cloak>
@@ -229,15 +99,21 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" x-html="article.title"></div>
+                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" @unless(strlen($mobile_header ?? false)) x-html="article.title" @endunless>
+                        {{ $mobile_header ?? '' }}
+                    </div>
                 </div>
                 <main class="bg-white dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
                     <div class="py-6 text-gray-700 dark:text-white">
                         <div class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8">
-                            <h1 class="text-4xl font-bold" x-html="article.title"></h1>
+                            <h1 class="text-4xl font-bold" @unless(strlen($header ?? false)) x-html="article.title" @endunless>
+                                {{ $header ?? '' }}
+                            </h1>
+                            <hr class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8 border-gray-300 dark:border-gray-700 my-8">
                         </div>
-                        <hr class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8 border-gray-300 dark:border-gray-700 my-8">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" id="article-content" x-html="article.content"></div>
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" @unless(strlen($slot)) id="article-content" x-html="article.content" @endunless>
+                            {{ $slot ?? '' }}
+                        </div>
                     </div>
                 </main>
             </div>

@@ -23,6 +23,7 @@ Route::get('/linkData', [\App\Http\Controllers\ArticleController::class, 'linkDa
 Route::get('/get-article/', [\App\Http\Controllers\ArticleController::class, 'articleJson'])->name('articleJson');
 Route::get('/search/', [\App\Http\Controllers\ArticleController::class, 'search'])->name('search');
 Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
-Route::get('/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
+Route::get('/a/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
+Route::view('/', 'show_article');
 
 require __DIR__.'/auth.php';

@@ -1,9 +1,17 @@
 require('./bootstrap');
 
+import app from './magma-glass/app';
+import fileTree from './magma-glass/file-tree';
+
 import Alpine from 'alpinejs';
 window.Alpine = Alpine;
+
+Alpine.data('app', app);
+Alpine.data('fileTree', fileTree);
+
 Alpine.start();
 
+// Hotkeys
 import hotkeys from 'hotkeys-js';
 
 hotkeys('ctrl+k', function(event, handler){

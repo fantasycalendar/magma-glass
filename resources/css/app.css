@@ -33,7 +33,7 @@
         @apply table-auto;
     }
 
-    #article-content [x-cloak] {
+    [x-cloak] {
         display: none !important;
     }
 

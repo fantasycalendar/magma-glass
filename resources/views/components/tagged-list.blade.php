@@ -2,7 +2,7 @@
     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
         @foreach($articles as $article)
             <li>
-                <a href="{{ route('article', $article['path']) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150">
+                <a href="{{ route('article', Str::substr($article['path'], 0, Str::length($article['path']) - 3)) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150">
                     <div class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
                             <p class="text-sm font-medium text-blue-400 truncate">
@@ -22,9 +22,7 @@
                             <div class="sm:flex">
                                 <p class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                                     <!-- Heroicon name: solid/users -->
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                    </svg>
+                                    <i class="fab fa-markdown mr-2"></i>
                                     {{ $article['path'] }}
                                 </p>
                             </div>
