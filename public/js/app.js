@@ -5303,6 +5303,27 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
   event.preventDefault();
   window.toggleTheme();
 });
+(0,hotkeys_js__WEBPACK_IMPORTED_MODULE_1__["default"])('ctrl+f5,ctrl+shift+r', function (event, handler) {
+  event.preventDefault();
+  var currentItem;
+  var currentKey;
+  var toRemove = [];
+
+  for (var i = 0; i < localStorage.length; i++) {
+    currentItem = localStorage.getItem(localStorage.key(i));
+    currentKey = localStorage.key(i);
+
+    if (currentItem.includes("expiry")) {
+      toRemove.push(currentKey);
+    }
+  }
+
+  for (var _i = 0; _i < toRemove.length; _i++) {
+    localStorage.removeItem(toRemove[_i]);
+  }
+
+  location.reload();
+});
 
 /***/ }),
 

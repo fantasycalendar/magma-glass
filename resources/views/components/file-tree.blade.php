@@ -12,11 +12,13 @@
                         el.previousElementSibling.querySelector('i.fa').classList.add("fa-folder-open");
                         el.previousElementSibling.querySelector('i.fa').classList.remove("fa-folder");
                         el.classList.add("opacity-100");
+                        el.classList.remove("opacity-0");
                     },10)
                 },
                 hideLevel: function(el) {
                     el.style.display = 'none';
                     el.classList.remove("opacity-100");
+                    el.classList.add("opacity-0");
                     el.previousElementSibling.querySelector('i.fa').classList.remove("fa-folder-open");
                     el.previousElementSibling.querySelector('i.fa').classList.add("fa-folder");
 

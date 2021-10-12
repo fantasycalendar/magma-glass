@@ -63,4 +63,22 @@
     /*input:not(:focus) + .search-results {*/
     /*    display: none;*/
     /*}*/
+
+
+    input[type="search"]::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+        height: 1em;
+        width: 1em;
+        border-radius: 50em;
+        @apply text-gray-500 dark:text-gray-300;
+        background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+        background-size: contain;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    input[type="search"]:focus::-webkit-search-cancel-button {
+        opacity: .3;
+        pointer-events: all;
+    }
 }

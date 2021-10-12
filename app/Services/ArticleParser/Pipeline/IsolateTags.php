@@ -15,6 +15,7 @@ class IsolateTags extends \App\Services\ArticleParser\Pipe
 
     private static function replaceWikilinks($matches)
     {
-        return sprintf("[%s](%s)", $matches[1], route('tag', ['tag' => $matches[1]]));
+//        return sprintf("[%s](%s)", $matches[1], route('tag', ['tag' => $matches[1]]));
+        return sprintf("<a class='px-2 mr-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100' href='%s'>%s</a>", route('tag', ['tag' => $matches[1]]), $matches[1]);
     }
 }

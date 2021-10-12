@@ -32,10 +32,6 @@
                 window.theme = theme;
                 localStorage.theme = theme;
                 document.documentElement.classList.toggle('dark', theme === 'dark');
-
-                console.log(window.theme);
-                console.log(localStorage);
-                console.log(document.documentElement.classList);
             }
 
             function setWithExpiry(key, value, ttl) {
@@ -189,6 +185,7 @@
                             <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
                             <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
                         </div>
+                        <x-article-search></x-article-search>
                         <x-file-tree></x-file-tree>
                     </div>
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
@@ -232,14 +229,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4">
-                        {{ $mobile_header }}
-                    </div>
+                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" x-html="article.title"></div>
                 </div>
                 <main class="bg-white dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
                     <div class="py-6 text-gray-700 dark:text-white">
                         <div class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8">
-                            <h1 class="text-4xl" x-html="article.title"><strong>{{ config('app.name') }}</strong></h1>
+                            <h1 class="text-4xl font-bold" x-html="article.title"></h1>
                         </div>
                         <hr class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8 border-gray-300 dark:border-gray-700 my-8">
                         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" id="article-content" x-html="article.content"></div>
