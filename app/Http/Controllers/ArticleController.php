@@ -43,11 +43,11 @@ class ArticleController extends Controller
         return "Article '$article' does not exist";
     }
 
-    public function tag(Request $request)
+    public function tag($tag)
     {
         return view('tag_search', [
-            'tagSearch' => $request->input('tag'),
-            'results' => ArticleCache::allWithTag($request->input('tag'))
+            'tagSearch' => $tag,
+            'results' => ArticleCache::allWithTag($tag)
         ]);
     }
 
