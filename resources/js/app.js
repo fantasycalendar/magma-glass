@@ -43,5 +43,7 @@ hotkeys('ctrl+f5,ctrl+shift+r', function(event, handler){
         localStorage.removeItem(toRemove[i]);
     }
 
-    location.reload();
+    let url = new URL(location.href);
+    url.searchParams.append('cold_boot', 'true')
+    self.location = url;
 });

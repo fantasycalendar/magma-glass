@@ -11,6 +11,13 @@ class ArticleController extends Controller
 {
     public function index($articlePath = '')
     {
+        if(request()->input('cold_boot')) {
+            logger()->debug('Cold booting, clearing cache.');
+            cache()->forget('articles_cache');
+            cache()->forget('file_tree');
+            logger()->debug('Cache cleared.');
+        }
+
         return view('show_article', [
             'isIndex' => $articlePath == ''
         ]);

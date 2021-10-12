@@ -5329,7 +5329,9 @@ alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start(); // Hotkeys
     localStorage.removeItem(toRemove[_i]);
   }
 
-  location.reload();
+  var url = new URL(location.href);
+  url.searchParams.append('cold_boot', 'true');
+  self.location = url;
 });
 
 /***/ }),
