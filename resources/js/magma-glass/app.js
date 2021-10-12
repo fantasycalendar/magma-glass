@@ -7,6 +7,7 @@ export default() => ({
         title: 'Loading',
         content: 'Loading...'
     },
+    'articleUpdated': false,
     'searchResults': [],
     'showSearchResults': false,
 
@@ -51,6 +52,8 @@ export default() => ({
             this.updateArticle(decodeURI(location.pathname.substr(2)))
             this.loaded = true;
         }
+
+        hljs.highlightAll();
     },
 
     updateArticle(path, back = false) {
@@ -87,6 +90,8 @@ export default() => ({
                     content: data.content
                 }
 
+                this.$nextTick(() => this.postRender());
+
                 this.setWithExpiry('article_content_cache.' + decodeURI(location.pathname.substr(2)), this.article, 300000);
             });
         }
@@ -97,6 +102,12 @@ export default() => ({
         }
 
         this.sidebar = false;
+        this.$nextTick(() => this.postRender());
+    },
+
+    postRender() {
+        console.log('postRender');
+        hljs.highlightAll();
     },
 
     fetchSearchResults($event) {

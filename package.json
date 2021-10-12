@@ -21,6 +21,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "highlight.js": "^11.2.0",
         "hotkeys-js": "^3.8.7"
     }
 }
