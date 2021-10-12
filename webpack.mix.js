@@ -18,5 +18,5 @@ mix
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .copy('node_modules/highlight.js/styles/base16/onedark.css', 'public/css/highlightjs-dark.css')
+    .copy('node_modules/highlight.js/styles/github-dark.css', 'public/css/highlightjs-dark.css')
     .copy('node_modules/highlight.js/styles/base16/one-light.css', 'public/css/highlightjs-light.css');
