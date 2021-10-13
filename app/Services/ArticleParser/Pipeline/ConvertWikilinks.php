@@ -4,6 +4,7 @@ namespace App\Services\ArticleParser\Pipeline;
 
 use App\Models\Article;
 use App\Services\ArticleCache;
+use Illuminate\Support\Str;
 
 class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
 {
@@ -15,11 +16,21 @@ class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
 
     private static function replaceWikilinks($matches)
     {
-        if(ArticleCache::hasArticle($matches[1])) {
-            return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", wikilink($matches[1]), $matches[1]);
+        $linkTarget = $matches[1];
+        $linkLabel = $matches[1];
+
+        if(Str::contains($linkTarget, '|')) {
+            $parts = explode('|', $linkTarget);
+
+            $linkTarget = $parts[0];
+            $linkLabel = $parts[1] ?? '';
         }
 
-        return sprintf("<a class='text-rose-700 dark:text-rose-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", $matches[1], $matches[1]);
+        if(ArticleCache::hasArticle($linkTarget)) {
+            return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", wikilink($linkTarget), $linkLabel);
+        }
+
+        return sprintf("<a class='text-rose-700 dark:text-rose-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", $linkTarget, $linkLabel);
     }
 
 }

@@ -17,6 +17,27 @@
         @apply pt-2;
     }
 
+    #article-content a:not([class*='text-']) {
+        @apply text-teal-600 dark:text-teal-500;
+    }
+
+    #article-content a:not([class*='text-']):after {
+        content: '\f360';
+        font-family: "Font Awesome 5 Free Solid";
+        font-weight: 400;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        padding-left: 4px;
+    }
+
+    p > code {
+        @apply bg-gray-200 dark:bg-gray-900 text-red-500 dark:text-red-400 px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-700 inline-block;
+        font-size: 0.8rem;
+    }
+
     #article-content ul {
         @apply list-disc ml-8;
     }
@@ -38,7 +59,11 @@
     }
 
     #article-content > :not(div):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(:first-child) {
-        @apply pt-2;
+        @apply pt-3;
+    }
+
+    #article-content > hr {
+        @apply border-gray-100 dark:border-gray-700 mt-6;
     }
 
     #article-content > h1:not(:first-child) {

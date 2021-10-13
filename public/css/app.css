@@ -813,6 +813,57 @@ select {
 	padding-top: 0.5rem;
 }
 
+    #article-content a:not([class*='text-']) {
+	--tw-text-opacity: 1;
+	color: rgba(13, 148, 136, var(--tw-text-opacity));
+}
+
+    .dark #article-content a:not([class*='text-']) {
+	--tw-text-opacity: 1;
+	color: rgba(20, 184, 166, var(--tw-text-opacity));
+}
+
+    #article-content a:not([class*='text-']):after {
+        content: '\f360';
+        font-family: "Font Awesome 5 Free Solid";
+        font-weight: 400;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        padding-left: 4px;
+    }
+
+    p > code {
+	display: inline-block;
+	border-radius: 0.25rem;
+	border-width: 1px;
+	--tw-border-opacity: 1;
+	border-color: rgba(209, 213, 219, var(--tw-border-opacity));
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+	padding-left: 0.375rem;
+	padding-right: 0.375rem;
+	padding-top: 0.125rem;
+	padding-bottom: 0.125rem;
+	--tw-text-opacity: 1;
+	color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+    .dark p > code {
+	--tw-border-opacity: 1;
+	border-color: rgba(55, 65, 81, var(--tw-border-opacity));
+	--tw-bg-opacity: 1;
+	background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+	--tw-text-opacity: 1;
+	color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
+
+    p > code {
+        font-size: 0.8rem;
+    }
+
     #article-content ul {
 	margin-left: 2rem;
 	list-style-type: disc;
@@ -837,7 +888,18 @@ select {
     }
 
     #article-content > :not(div):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(:first-child) {
-	padding-top: 0.5rem;
+	padding-top: 0.75rem;
+}
+
+    #article-content > hr {
+	margin-top: 1.5rem;
+	--tw-border-opacity: 1;
+	border-color: rgba(243, 244, 246, var(--tw-border-opacity));
+}
+
+    .dark #article-content > hr {
+	--tw-border-opacity: 1;
+	border-color: rgba(55, 65, 81, var(--tw-border-opacity));
 }
 
     #article-content > h1:not(:first-child) {
@@ -1573,6 +1635,18 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(251, 191, 36, var(--tw-text-opacity));
 }
+.text-purple-400 {
+	--tw-text-opacity: 1;
+	color: rgba(167, 139, 250, var(--tw-text-opacity));
+}
+.text-green-400 {
+	--tw-text-opacity: 1;
+	color: rgba(52, 211, 153, var(--tw-text-opacity));
+}
+.text-indigo-400 {
+	--tw-text-opacity: 1;
+	color: rgba(129, 140, 248, var(--tw-text-opacity));
+}
 .text-gray-500 {
 	--tw-text-opacity: 1;
 	color: rgba(107, 114, 128, var(--tw-text-opacity));
@@ -1901,6 +1975,18 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(245, 158, 11, var(--tw-text-opacity));
 }
+.group:hover .group-hover\:text-purple-500 {
+	--tw-text-opacity: 1;
+	color: rgba(139, 92, 246, var(--tw-text-opacity));
+}
+.group:hover .group-hover\:text-green-500 {
+	--tw-text-opacity: 1;
+	color: rgba(16, 185, 129, var(--tw-text-opacity));
+}
+.group:hover .group-hover\:text-indigo-500 {
+	--tw-text-opacity: 1;
+	color: rgba(99, 102, 241, var(--tw-text-opacity));
+}
 .dark .dark\:inline {
 	display: inline;
 }
@@ -1961,6 +2047,22 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(217, 119, 6, var(--tw-text-opacity));
 }
+.dark .dark\:text-purple-500 {
+	--tw-text-opacity: 1;
+	color: rgba(139, 92, 246, var(--tw-text-opacity));
+}
+.dark .dark\:text-green-500 {
+	--tw-text-opacity: 1;
+	color: rgba(16, 185, 129, var(--tw-text-opacity));
+}
+.dark .dark\:text-indigo-500 {
+	--tw-text-opacity: 1;
+	color: rgba(99, 102, 241, var(--tw-text-opacity));
+}
+.dark .dark\:text-gray-500 {
+	--tw-text-opacity: 1;
+	color: rgba(107, 114, 128, var(--tw-text-opacity));
+}
 .dark .dark\:text-gray-300 {
 	--tw-text-opacity: 1;
 	color: rgba(209, 213, 219, var(--tw-text-opacity));
@@ -2016,6 +2118,22 @@ select {
 .dark .group:hover .dark\:group-hover\:text-red-300 {
 	--tw-text-opacity: 1;
 	color: rgba(252, 165, 165, var(--tw-text-opacity));
+}
+.dark .group:hover .dark\:group-hover\:text-purple-300 {
+	--tw-text-opacity: 1;
+	color: rgba(196, 181, 253, var(--tw-text-opacity));
+}
+.dark .group:hover .dark\:group-hover\:text-green-300 {
+	--tw-text-opacity: 1;
+	color: rgba(110, 231, 183, var(--tw-text-opacity));
+}
+.dark .group:hover .dark\:group-hover\:text-indigo-300 {
+	--tw-text-opacity: 1;
+	color: rgba(165, 180, 252, var(--tw-text-opacity));
+}
+.dark .group:hover .dark\:group-hover\:text-gray-300 {
+	--tw-text-opacity: 1;
+	color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
 @media (min-width: 640px) {
 
