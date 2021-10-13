@@ -104,8 +104,8 @@ class ArticleCache
 
         $fullArticlePath = Storage::disk('articles')->path($localPath);
         if(!Storage::disk('articles')->exists($localPath)) {
-            if($articlePath == 'Home') {
-                return new Article('', '', '_You can create a note in the root of your vault called **"Home"** to customize this page._');
+            if(static::pathIsHome($articlePath)) {
+                return new Article('', '', "<div class='p-5 bg-gray-700 text-center text-xl font-italic'>You can create a note in the root of your vault called <strong>\"Home\"</strong>, <strong>\"Index\"</strong>, or <strong>\"Start here\"</strong> to customize this page.</div>");
             }
 
             return new Article('Oooops!', $fullArticlePath, "## The file '$articlePath' doesn't exist yet!");
@@ -119,5 +119,16 @@ class ArticleCache
     public static function hasImage(string $imageName)
     {
         return static::populate()['articles']->has($imageName);
+    }
+
+    /**
+     * Checks whether a 'not found' path is a home path.
+     *
+     * @param $articlePath
+     * @return bool
+     */
+    private static function pathIsHome($articlePath): bool
+    {
+        return in_array(strtolower($articlePath), ['/home.md', '/start here.md', '/index.md']);
     }
 }
