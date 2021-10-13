@@ -24,6 +24,6 @@ Route::get('/get-article/', [\App\Http\Controllers\ArticleController::class, 'ar
 Route::get('/search/', [\App\Http\Controllers\ArticleController::class, 'search'])->name('search');
 Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
 Route::get('/a/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
-Route::redirect('/', '/a/Home');
+Route::redirect('/', '/a/');
 
 require __DIR__.'/auth.php';
