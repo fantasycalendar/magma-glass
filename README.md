@@ -6,6 +6,10 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Heavy use of cache if available
   - [x] Support relative wikilinks
   - [x] Support non-relative wikilinks
+  - [ ] Support [Obsidian Aliases](https://help.obsidian.md/How+to/Add+aliases+to+note)
+  - [ ] Fully support [Obsidian's embedded image format](https://help.obsidian.md/How+to/Embed+files#Developer+notes)
+    - [ ] Including resizing
+  - [ ] Safely support `iframe` embeds
   - [ ] Allow marking certain folders as private
   - [ ] Parsing/syntax highlighting of code blocks?
 - [x] Have a traversible menu structure
