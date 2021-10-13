@@ -6,6 +6,9 @@ use App\Models\Article;
 use App\Services\ArticleCache;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RetrieveArticle
 {
@@ -23,7 +26,9 @@ class RetrieveArticle
      */
     public function __construct(string $articlePath)
     {
-        $this->articlePath = $articlePath;
+        $this->articlePath = ($articlePath == '/' || $articlePath == '')
+            ? $this->resolveDefaultArticlePath() ?? '/Home'
+            : $articlePath;
     }
 
     /**
@@ -34,10 +39,23 @@ class RetrieveArticle
      */
     public function handle(): Article
     {
-        if($this->articlePath == '') {
-            $this->articlePath = config('magmaglass.index_file', 'Home');
+        return ArticleCache::getByArticlePath($this->articlePath);
+    }
+
+    private function resolveDefaultArticlePath()
+    {
+        if(config('magmaglass.default_article_path')) {
+            return config('magmaglass.default_article_path');
         }
 
-        return ArticleCache::getByArticlePath($this->articlePath);
+        $files = collect(Storage::disk('articles')->files('/'));
+
+        $pathsToTry = [
+            'home.md',
+            'start here.md',
+            'index.md',
+        ];
+
+        return $files->filter(fn($file) => in_array(Str::lower($file), $pathsToTry))->first();
     }
 }
