@@ -2,6 +2,8 @@
    class="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white group flex items items-center px-3 py-2 text-sm font-medium rounded-sm {{ $contents->has('children') ? 'has-children' : '' }}"
    @if($contents->has('children'))
        @click.prevent="toggleLevel($refs.{{ $contents->get('ref') }})"
+   @elseif(Str::endsWith($contents->get('path'), ['png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff']))
+        @click="$dispatch('open-image', '{{ wikilink($contents->get('path')) }}')"
    @else
        @click="$dispatch('article-change', '{{ $contents->get('path') }}')"
    @endif

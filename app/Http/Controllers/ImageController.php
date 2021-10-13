@@ -10,6 +10,11 @@ class ImageController extends Controller
 {
     public function image($image)
     {
-        return response()->file(Storage::disk('articles')->path(ArticleCache::populate()['articles'][$image]['path']));
+        return response()
+            ->file(
+                Storage::disk('articles')
+                    ->path(
+                        ArticleCache::populate()['articles'][strtolower(basename($image))]['path'])
+            );
     }
 }

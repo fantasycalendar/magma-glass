@@ -118,7 +118,7 @@ class ArticleCache
 
     public static function hasImage(string $imageName)
     {
-        return static::populate()['articles']->has($imageName);
+        return static::populate()['articles']->has(strtolower(basename($imageName)));
     }
 
     /**
