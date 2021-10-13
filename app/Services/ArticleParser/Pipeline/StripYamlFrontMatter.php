@@ -5,7 +5,7 @@ namespace App\Services\ArticleParser\Pipeline;
 use App\Models\Article;
 use App\Services\ArticleParser\Pipe;
 
-class ConvertBannerYaml extends Pipe
+class StripYamlFrontMatter extends Pipe
 {
     public function parse(Article $article): Article
     {

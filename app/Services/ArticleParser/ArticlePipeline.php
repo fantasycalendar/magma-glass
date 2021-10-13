@@ -3,7 +3,7 @@
 namespace App\Services\ArticleParser;
 
 use App\Models\Article;
-use App\Services\ArticleParser\Pipeline\ConvertBannerYaml;
+use App\Services\ArticleParser\Pipeline\StripYamlFrontMatter;
 use App\Services\ArticleParser\Pipeline\ConvertImageLinks;
 use App\Services\ArticleParser\Pipeline\ConvertMarkdownToHtml;
 use App\Services\ArticleParser\Pipeline\ConvertWikilinks;
@@ -14,7 +14,7 @@ use Illuminate\Pipeline\Pipeline;
 class ArticlePipeline
 {
     public static $steps = [
-        ConvertBannerYaml::class,
+        StripYamlFrontMatter::class,
         IsolateTags::class,
         ConvertMarkdownToHtml::class,
         StyleTables::class,
