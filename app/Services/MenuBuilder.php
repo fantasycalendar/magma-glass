@@ -8,13 +8,39 @@ use Illuminate\Support\Str;
 class MenuBuilder
 {
     private static $icons = [
-        'md' => 'fa-file text-blue-400 dark:text-blue-500 group-hover:text-blue-500 dark:group-hover:text-blue-300',
-        'png' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
-        'jpg' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
-        'jpeg' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
-        'gif' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
-        'pdf' => 'fa-file-pdf text-red-400 dark:text-red-500 group-hover:text-red-500 dark:group-hover:text-red-300',
-        'folder' => 'fa-folder text-yellow-400 dark:text-yellow-600 group-hover:text-yellow-500 dark:group-hover:text-orange-300'
+        'md' => 'fa-file-alt text-blue-400 dark:text-blue-500 group-hover:text-blue-500 dark:group-hover:text-blue-300',
+        'image' => 'fa-file-image text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-100',
+        'document' => 'fa-file-pdf text-red-400 dark:text-red-500 group-hover:text-red-500 dark:group-hover:text-red-300',
+        'folder' => 'fa-folder text-yellow-400 dark:text-yellow-600 group-hover:text-yellow-500 dark:group-hover:text-orange-300',
+        'audio' => 'fa-file-audio text-purple-400 dark:text-purple-500 group-hover:text-purple-500 dark:group-hover:text-purple-300',
+        'video' => 'fa-file-audio text-green-400 dark:text-green-500 group-hover:text-green-500 dark:group-hover:text-green-300',
+        'multimedia' => 'fa-photo-video text-indigo-400 dark:text-indigo-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-300',
+        'archive' => 'fa-photo-video text-indigo-400 dark:text-indigo-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-300',
+        'unknown' => 'fa-file text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300',
+    ];
+
+    private static $fileTypesByExtension = [
+        'md' => 'md',
+        'png' => 'image',
+        'jpg' => 'image',
+        'jpeg' => 'image',
+        'gif' => 'image',
+        'bmp' => 'image',
+        'svg' => 'image',
+        'mp3' => 'audio',
+        'wav' => 'audio',
+        'm4a' => 'audio',
+        'ogg' => 'audio',
+        '3gp' => 'audio',
+        'flac' => 'audio',
+        'mp4' => 'video',
+        'ogv' => 'video',
+        'webm' => 'multimedia',
+        'pdf' => 'document',
+        'zip' => 'archive',
+        '7z' => 'archive',
+        'rar' => 'archive',
+        'gz' => 'archive',
     ];
 
     public static function build()
@@ -40,9 +66,9 @@ class MenuBuilder
         $files = collect(Storage::disk('articles')->files($path))->map(function($file){
             $fileInfo = pathinfo($file);
             $title = $fileInfo['filename'];
-            $icon = $title == 'Home'
+            $icon = in_array(strtolower($title), ['home', 'start here', 'index'])
                 ? 'fa-home'
-                : self::$icons[$fileInfo['extension']];
+                : static::resolveIcon($fileInfo['extension']);
 
             return [
                 'title' => $title,
@@ -53,9 +79,23 @@ class MenuBuilder
         });
 
         return $directories->merge($files)->map(function($item){
-            $item['hash'] = sha1($item['path']);
+            // Prepend an 'l' because this is used as a 'ref' in Alpine, and
+            // JavaScript properties cannot start with a number.
+            $item['ref'] = 'l' . sha1($item['path']);
 
             return $item;
         });
+    }
+
+    /**
+     * Resolves a list of icon classes based on file extension
+     *
+     * @param $extension
+     * @return string
+     */
+    public static function resolveIcon($extension): string
+    {
+        return self::$icons[self::$fileTypesByExtension[$extension]]
+            ?? self::$icons['unknown'];
     }
 }
