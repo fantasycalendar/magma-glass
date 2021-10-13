@@ -53,7 +53,7 @@ class ArticleCache
                 $links = $content->matchAll('/\[\[(.+?)\]\]/u')->reject(fn($string) => Str::endsWith($string, ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif', '.tiff']));
 
                 return [
-                    basename($path) => [
+                    strtolower(basename($path)) => [
                         'path' => $path,
                         'title' => pathinfo($path)['filename'],
                         'tags' => $tags,
@@ -67,7 +67,7 @@ class ArticleCache
 
     public static function hasArticle($articleName): bool
     {
-        return static::populate()['articles']->has($articleName . '.md');
+        return static::populate()['articles']->has(strtolower($articleName) . '.md');
     }
 
     /**
