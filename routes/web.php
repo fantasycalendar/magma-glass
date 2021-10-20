@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('test', function(){
 //    dd(\App\Services\MenuBuilder::build());
 //});
-Route::view('test', 'test');
+Route::get('test', [\App\Http\Controllers\ArticleController::class, 'test']);
 Route::get('/image/{path}', [\App\Http\Controllers\ImageController::class, 'image'])->name('image')->where('path', '.*');
 Route::get('/tag/{tag}', [\App\Http\Controllers\ArticleController::class, 'tag'])->name('tag')->where('tag', '.*');
 Route::get('/linkData', [\App\Http\Controllers\ArticleController::class, 'linkData'])->name('linkData');

@@ -9,6 +9,13 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
+    public function test()
+    {
+        dd(RetrieveArticle::dispatchSync('Orlbar/Temple of the Undying Magister')->getBlocks());
+
+        return;
+    }
+
     public function index($articlePath = '')
     {
         if(request()->input('cold_boot')) {
