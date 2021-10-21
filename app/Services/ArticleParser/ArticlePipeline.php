@@ -9,6 +9,7 @@ use App\Services\ArticleParser\Pipeline\ConvertMarkdownToHtml;
 use App\Services\ArticleParser\Pipeline\ConvertWikilinks;
 use App\Services\ArticleParser\Pipeline\IsolateTags;
 use App\Services\ArticleParser\Pipeline\StyleTables;
+use App\Services\ArticleParser\Pipeline\WrapBlocks;
 use Illuminate\Pipeline\Pipeline;
 
 class ArticlePipeline
@@ -20,6 +21,7 @@ class ArticlePipeline
         StyleTables::class,
         ConvertImageLinks::class,
         ConvertWikilinks::class,
+        WrapBlocks::class,
     ];
 
     public static function process(Article $article): Article
