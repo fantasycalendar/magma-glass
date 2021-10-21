@@ -2,15 +2,22 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
-use App\Models\Article;
+use App\Models\ArticleBlock;
 use App\Services\ArticleCache;
 
 class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
 {
+    public static string $pattern = '/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/';
 
-    public function parse(Article $article): Article
+    public function parse(ArticleBlock $block): ArticleBlock
     {
-        return $article->setContent(preg_replace_callback('/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/', [static::class, 'replaceImageLinks'], $article->content));
+        return $block->setContent(
+            preg_replace_callback(
+                static::$pattern,
+                [static::class, 'replaceImageLinks'],
+                $block->content
+            )
+        );
     }
 
     /**

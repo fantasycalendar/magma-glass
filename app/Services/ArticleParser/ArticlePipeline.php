@@ -15,8 +15,8 @@ class ArticlePipeline
 {
     public static $steps = [
         StripYamlFrontMatter::class,
-        ConvertMarkdownToHtml::class,
         IsolateTags::class,
+        ConvertMarkdownToHtml::class,
         StyleTables::class,
         ConvertImageLinks::class,
         ConvertWikilinks::class,

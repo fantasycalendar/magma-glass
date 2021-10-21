@@ -11,7 +11,7 @@ class Article
     public string $name;
     public string $path;
     public Collection $tags;
-    private Collection $blocks;
+    public Collection $blocks;
 
     public function __construct($name, $path, $contents, $tags = [])
     {
@@ -34,7 +34,7 @@ class Article
 
     public function getBlocks(): Collection
     {
-        return $this->blocks->keyBy('id')->map->contents;
+        return $this->blockify()->keyBy('id');
     }
 
     /**
@@ -54,13 +54,17 @@ class Article
      *
      * @return string
      */
-    public function getParsed(): string
+    public function getParsed()
     {
         if($this->nameIsHeading()) {
             $this->hideFirstLine();
         }
 
-        return ArticlePipeline::process($this)->content;
+        return ArticlePipeline::process($this)
+            ->blocks
+            ->map
+            ->content
+            ->join("\n\n");
     }
 
     public function setContent(string $content): self

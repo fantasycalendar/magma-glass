@@ -2,14 +2,17 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
-use App\Models\Article;
+use App\Models\ArticleBlock;
 use App\Services\ArticleParser\Pipe;
+use League\CommonMark\CommonMarkConverter;
 use Parsedown;
 
 class ConvertMarkdownToHtml extends Pipe
 {
-    public function parse(Article $article): Article
+    public function parse(ArticleBlock $block): ArticleBlock
     {
-        return $article->setContent((new Parsedown())->setSafeMode(false)->text($article->content));
+        $parser = new CommonMarkConverter();
+
+        return $block->setContent($parser->convertToHtml($block->content));
     }
 }

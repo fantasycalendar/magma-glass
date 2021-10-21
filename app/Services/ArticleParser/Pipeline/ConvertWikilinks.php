@@ -2,16 +2,23 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
-use App\Models\Article;
+use App\Models\ArticleBlock;
 use App\Services\ArticleCache;
 use Illuminate\Support\Str;
 
 class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
 {
+    public static string $pattern = '/\[\[(.+?)\]\]/u';
 
-    public function parse(Article $article): Article
+    public function parse(ArticleBlock $block): ArticleBlock
     {
-        return $article->setContent(preg_replace_callback('/\[\[(.+?)\]\]/u', [static::class, 'replaceWikiLinks'], $article->content));
+        return $block->setContent(
+            preg_replace_callback(
+                static::$pattern,
+                [static::class, 'replaceWikiLinks'],
+                $block->content
+            )
+        );
     }
 
     private static function replaceWikilinks($matches)

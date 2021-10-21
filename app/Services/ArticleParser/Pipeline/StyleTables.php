@@ -3,14 +3,12 @@
 namespace App\Services\ArticleParser\Pipeline;
 
 use App\Models\Article;
-//use PHPHtmlParser\Dom;
+use App\Models\ArticleBlock;
 
 class StyleTables extends \App\Services\ArticleParser\Pipe
 {
-    public function parse(Article $article): Article
+    public function parse(ArticleBlock $block): ArticleBlock
     {
-//        $content = (new Dom())->loadStr($article->content);
-
         $replacements = [
             '<table>' => '<table class="min-w-full divide-y divide-gray-800 mb-8">',
             '<thead>' =>  '<thead class="bg-gray-800">',
@@ -19,10 +17,10 @@ class StyleTables extends \App\Services\ArticleParser\Pipe
             '<td>' => '<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">'
         ];
 
-        return $article->setContent(str_replace(
+        return $block->setContent(str_replace(
             array_keys($replacements),
             array_values($replacements),
-            $article->content
+            $block->content
         ));
     }
 }

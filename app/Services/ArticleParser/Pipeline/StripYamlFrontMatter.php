@@ -2,13 +2,13 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
-use App\Models\Article;
+use App\Models\ArticleBlock;
 use App\Services\ArticleParser\Pipe;
 
 class StripYamlFrontMatter extends Pipe
 {
-    public function parse(Article $article): Article
+    public function parse(ArticleBlock $block): ArticleBlock
     {
-        return $article->setContent(preg_replace('/^-{3}(\n|\r|\r\n)((.*)(\n|\r|\r\n))*-{3}/', '', $article->content));
+        return $block->setContent(preg_replace('/^-{3}(\n|\r|\r\n)((.*)(\n|\r|\r\n))*-{3}/', '', $block->content));
     }
 }
