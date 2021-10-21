@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('articles', function($app){
+            return new ArticleCache();
+        });
     }
 
     /**
@@ -25,7 +27,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Debugbar::disable();
-
-        ArticleCache::populate();
     }
 }

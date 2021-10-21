@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 
 if(!function_exists('wikilink')) {
     function wikilink($linkname) {
-        $cache = \App\Services\ArticleCache::populate();
+        $cache = app()->make('articles')->getLinkData();
 
         if(\Illuminate\Support\Str::endsWith($linkname, ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif', '.tiff'])) {
             return route('image', $linkname);

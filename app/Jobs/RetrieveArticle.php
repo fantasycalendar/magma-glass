@@ -39,7 +39,7 @@ class RetrieveArticle
      */
     public function handle(): Article
     {
-        return ArticleCache::getByArticlePath($this->articlePath);
+        return app()->make('articles')->getByArticlePath($this->articlePath);
     }
 
     private function resolveDefaultArticlePath()

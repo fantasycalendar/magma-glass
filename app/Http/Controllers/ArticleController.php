@@ -17,18 +17,11 @@ class ArticleController extends Controller
         return;
     }
 
-    public function index($articlePath = '')
+    public function index()
     {
-        if(request()->input('cold_boot')) {
-            logger()->debug('Cold booting, clearing cache.');
-            cache()->forget('articles_cache');
-            cache()->forget('file_tree');
-            logger()->debug('Cache cleared.');
-        }
+        app()->make('articles')->clearCache();
 
-        return view('show_article', [
-            'isIndex' => $articlePath == ''
-        ]);
+        return view('show_article');
     }
 
     public function articleJson(Request $request)
@@ -40,7 +33,7 @@ class ArticleController extends Controller
             'title' => $article->name,
             'content' => $article->getParsed(),
             'path' => $request->input('articlePath') ?? '',
-            'links' => ArticleCache::populate()['links']
+            'links' => app()->make('articles')->getLinks()
         ];
     }
 
@@ -55,19 +48,17 @@ class ArticleController extends Controller
     {
         return view('tag_search', [
             'tagSearch' => $tag,
-            'results' => ArticleCache::allWithTag($tag)
+            'results' => app()->make('articles')->allWithTag($tag)
         ]);
     }
 
     public function linkData()
     {
-        return ArticleCache::populate();
+        return app()->make('articles')->getLinkData();
     }
 
     public function search()
     {
-        return ArticleCache::populate()['articles']->filter(function($article){
-            return Str::contains(strtolower($article['title']), strtolower(request()->input('searchTerm')));
-        })->values();
+        return app()->make('articles')->search(request()->input('searchTerm'));
     }
 }

@@ -14,7 +14,8 @@ class ImageController extends Controller
             ->file(
                 Storage::disk('articles')
                     ->path(
-                        ArticleCache::populate()['articles'][strtolower(basename($image))]['path'])
+                        app()->make('articles')->getImagePath($image)
+                    )
             );
     }
 }

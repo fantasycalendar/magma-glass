@@ -31,7 +31,7 @@ class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
         // Filename . Ext
         $filename = $matches[2] . $matches[3];
 
-        if(ArticleCache::hasImage($filename)) {
+        if(app()->make('articles')->hasImage($filename)) {
             $link = wikilink($filename);
             return sprintf("<div class='flex flex-col p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center'><img class='m-auto text-center cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='text-gray-400 pt-6'>%s</div></div>", $link, $link, $filename);
         }

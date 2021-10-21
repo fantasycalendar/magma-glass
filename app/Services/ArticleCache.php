@@ -11,9 +11,14 @@ use Illuminate\Support\Str;
 
 class ArticleCache
 {
-    public static function populate()
+    /**
+     * @var mixed
+     */
+    private $cache;
+
+    public function __construct()
     {
-        return cache()->remember('articles_cache', config('magmaglass.cache_ttl'), function() {
+        $this->cache = cache()->remember('articles_cache', config('magmaglass.cache_ttl'), function() {
             $articles = collect(static::loadDirectory());
 
             return [
@@ -23,9 +28,9 @@ class ArticleCache
         });
     }
 
-    public static function allWithTag($tag)
+    public function allWithTag($tag)
     {
-        return static::populate()['articles']->filter(function($article) use ($tag) {
+        return $this->cache['articles']->filter(function($article) use ($tag) {
             return $article['tags']->contains("#$tag");
         });
     }
@@ -65,9 +70,9 @@ class ArticleCache
             ->toArray();
     }
 
-    public static function hasArticle($articleName): bool
+    public function hasArticle($articleName): bool
     {
-        return static::populate()['articles']->has(strtolower($articleName) . '.md');
+        return $this->cache['articles']->has(strtolower($articleName) . '.md');
     }
 
     /**
@@ -78,9 +83,9 @@ class ArticleCache
      * @throws ArticleNotFoundException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function getByArticleName($articleName): Article
+    public function getByArticleName($articleName): Article
     {
-        $info = static::populate()->get($articleName . '.md');
+        $info = $this->cache->get($articleName . '.md');
         $articlePath = $info['path'];
         if(!Storage::disk('articles')->exists($articlePath)) {
             throw new ArticleNotFoundException("No article '$articleName' was found.");
@@ -96,7 +101,7 @@ class ArticleCache
      * @return Article
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function getByArticlePath($articlePath): Article
+    public function getByArticlePath($articlePath): Article
     {
         $localPath = Str::endsWith($articlePath, '.md')
             ? $articlePath
@@ -116,9 +121,9 @@ class ArticleCache
         return new Article($details['filename'], $fullArticlePath, Storage::disk('articles')->get($localPath));
     }
 
-    public static function hasImage(string $imageName)
+    public function hasImage(string $imageName)
     {
-        return static::populate()['articles']->has(strtolower(basename($imageName)));
+        return $this->cache['articles']->has(strtolower(basename($imageName)));
     }
 
     /**
@@ -127,8 +132,40 @@ class ArticleCache
      * @param $articlePath
      * @return bool
      */
-    private static function pathIsHome($articlePath): bool
+    private function pathIsHome($articlePath): bool
     {
         return in_array(strtolower($articlePath), ['/home.md', '/start here.md', '/index.md']);
+    }
+
+    public function getLinks()
+    {
+        return $this->cache['links'];
+    }
+
+    public function getLinkData()
+    {
+        return $this->cache;
+    }
+
+    public function search($searchTerm)
+    {
+        return $this->cache->filter(function($article) use ($searchTerm) {
+            return Str::contains(strtolower($article['title']), strtolower($searchTerm));
+        })->values();
+    }
+
+    public function getImage($imageName)
+    {
+        return $this->cache['articles'][strtolower(basename($imageName))]['path'];
+    }
+
+    public function clearCache()
+    {
+        if(request()->input('cold_boot')) {
+            logger()->debug('Cold booting, clearing cache.');
+            cache()->forget('articles_cache');
+            cache()->forget('file_tree');
+            logger()->debug('Cache cleared.');
+        }
     }
 }

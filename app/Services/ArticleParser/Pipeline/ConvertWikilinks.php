@@ -33,7 +33,7 @@ class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
             $linkLabel = $parts[1] ?? '';
         }
 
-        if(ArticleCache::hasArticle($linkTarget)) {
+        if(app()->make('articles')->hasArticle($linkTarget)) {
             return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", wikilink($linkTarget), $linkLabel);
         }
 
