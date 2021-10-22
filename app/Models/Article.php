@@ -20,6 +20,7 @@ class Article
         $this->content = $contents;
         $this->path = $path;
         $this->tags = collect($tags);
+        $this->frontMatter = collect();
     }
 
     /**

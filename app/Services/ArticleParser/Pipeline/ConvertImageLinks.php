@@ -28,6 +28,7 @@ class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
      */
     private static function replaceImageLinks($matches): string
     {
+        dd($matches);
         // Filename . Ext
         $filename = $matches[2] . $matches[3];
 
