@@ -13,8 +13,8 @@
         @apply text-xl;
     }
 
-    #article-content :not(li) > p {
-        @apply pt-2;
+    #article-content > *{
+        @apply pt-3;
     }
 
     #article-content a:not([class*='text-']) {
@@ -62,7 +62,7 @@
         @apply pt-3;
     }
 
-    #article-content .article-block > hr {
+    #article-content > hr {
         @apply border-gray-100 dark:border-gray-700 mt-6;
     }
 

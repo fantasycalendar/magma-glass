@@ -2,7 +2,7 @@
 
 namespace App\Services\ArticleParser\Pipeline;
 
-use App\Models\ArticleBlock;
+use App\Models\Article;
 use App\Services\ArticleCache;
 use Illuminate\Support\Str;
 
@@ -10,7 +10,7 @@ class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
 {
     public static string $pattern = '/\[\[(.+?)\]\]/u';
 
-    public function parse(ArticleBlock $block): ArticleBlock
+    public function parse(Article $article): Article
     {
         return $block->setContent(
             preg_replace_callback(

@@ -7,7 +7,7 @@ use App\Models\ArticleBlock;
 
 class StyleTables extends \App\Services\ArticleParser\Pipe
 {
-    public function parse(ArticleBlock $block): ArticleBlock
+    public function parse(Article $article): Article
     {
         $replacements = [
             '<table>' => '<table class="min-w-full divide-y divide-gray-800 mb-8">',

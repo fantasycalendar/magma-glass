@@ -19,12 +19,8 @@ abstract class Pipe
      */
     protected function parseAll(Article $article): Article
     {
-        $article->blocks = $article->blocks->map(function($block){
-            return static::parse($block);
-        });
-
-        return $article;
+        return static::parse($article);
     }
 
-    public abstract function parse(ArticleBlock $article): ArticleBlock;
+    public abstract function parse(Article $article): Article;
 }

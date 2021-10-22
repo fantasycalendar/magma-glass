@@ -809,8 +809,8 @@ select {
 	line-height: 1.75rem;
 }
 
-    #article-content :not(li) > p {
-	padding-top: 0.5rem;
+    #article-content > * {
+	padding-top: 0.75rem;
 }
 
     #article-content a:not([class*='text-']) {
@@ -891,13 +891,13 @@ select {
 	padding-top: 0.75rem;
 }
 
-    #article-content .article-block > hr {
+    #article-content > hr {
 	margin-top: 1.5rem;
 	--tw-border-opacity: 1;
 	border-color: rgba(243, 244, 246, var(--tw-border-opacity));
 }
 
-    .dark #article-content .article-block > hr {
+    .dark #article-content > hr {
 	--tw-border-opacity: 1;
 	border-color: rgba(55, 65, 81, var(--tw-border-opacity));
 }
@@ -1006,6 +1006,9 @@ select {
 .z-50 {
 	z-index: 50;
 }
+.m-2 {
+	margin: 0.5rem;
+}
 .m-6 {
 	margin: 1.5rem;
 }
@@ -1022,6 +1025,9 @@ select {
 }
 .my-8 {
 	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+.mb-8 {
 	margin-bottom: 2rem;
 }
 .ml-3 {
@@ -1092,9 +1098,6 @@ select {
 }
 .-mr-2 {
 	margin-right: -0.5rem;
-}
-.mb-8 {
-	margin-bottom: 2rem;
 }
 .block {
 	display: block;
@@ -1297,13 +1300,13 @@ select {
 	border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
 	border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
-.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
-	--tw-divide-opacity: 1;
-	border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
-}
 .divide-gray-800 > :not([hidden]) ~ :not([hidden]) {
 	--tw-divide-opacity: 1;
 	border-color: rgba(31, 41, 55, var(--tw-divide-opacity));
+}
+.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+	--tw-divide-opacity: 1;
+	border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1345,6 +1348,9 @@ select {
 .border {
 	border-width: 1px;
 }
+.border-l-2 {
+	border-left-width: 2px;
+}
 .border-r {
 	border-right-width: 1px;
 }
@@ -1356,6 +1362,10 @@ select {
 }
 .border-l-4 {
 	border-left-width: 4px;
+}
+.border-gray-600 {
+	--tw-border-opacity: 1;
+	border-color: rgba(75, 85, 99, var(--tw-border-opacity));
 }
 .border-gray-300 {
 	--tw-border-opacity: 1;
@@ -1379,6 +1389,10 @@ select {
 .border-gray-700 {
 	--tw-border-opacity: 1;
 	border-color: rgba(55, 65, 81, var(--tw-border-opacity));
+}
+.bg-gray-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
 }
 .bg-white {
 	--tw-bg-opacity: 1;
@@ -1425,14 +1439,26 @@ select {
 .fill-current {
 	fill: currentColor;
 }
-.p-4 {
-	padding: 1rem;
-}
 .p-2 {
 	padding: 0.5rem;
 }
+.p-4 {
+	padding: 1rem;
+}
 .p-6 {
 	padding: 1.5rem;
+}
+.px-6 {
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+.py-3 {
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+}
+.py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 .px-4 {
 	padding-left: 1rem;
@@ -1462,14 +1488,6 @@ select {
 	padding-left: 0px;
 	padding-right: 0px;
 }
-.px-6 {
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
-}
-.py-4 {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-}
 .py-1 {
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
@@ -1477,10 +1495,6 @@ select {
 .px-1 {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
-}
-.py-3 {
-	padding-top: 0.75rem;
-	padding-bottom: 0.75rem;
 }
 .pt-4 {
 	padding-top: 1rem;
@@ -1530,6 +1544,10 @@ select {
 .font-sans {
 	font-family: Inter var, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+.text-xs {
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
 .text-sm {
 	font-size: 0.875rem;
 	line-height: 1.25rem;
@@ -1545,10 +1563,6 @@ select {
 .text-xl {
 	font-size: 1.25rem;
 	line-height: 1.75rem;
-}
-.text-xs {
-	font-size: 0.75rem;
-	line-height: 1rem;
 }
 .text-base {
 	font-size: 1rem;
@@ -1572,11 +1586,15 @@ select {
 .leading-tight {
 	line-height: 1.25;
 }
+.tracking-wider {
+	letter-spacing: 0.05em;
+}
 .tracking-widest {
 	letter-spacing: 0.1em;
 }
-.tracking-wider {
-	letter-spacing: 0.05em;
+.text-gray-200 {
+	--tw-text-opacity: 1;
+	color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
 .text-blue-400 {
 	--tw-text-opacity: 1;
@@ -1645,10 +1663,6 @@ select {
 .text-gray-300 {
 	--tw-text-opacity: 1;
 	color: rgba(209, 213, 219, var(--tw-text-opacity));
-}
-.text-gray-200 {
-	--tw-text-opacity: 1;
-	color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
 .text-blue-300 {
 	--tw-text-opacity: 1;

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Services\ArticleParser\ArticlePipeline;
 use Illuminate\Support\Collection;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class Article
 {
@@ -60,11 +61,7 @@ class Article
             $this->hideFirstLine();
         }
 
-        return ArticlePipeline::process($this)
-            ->blocks
-            ->map
-            ->content
-            ->join("\n\n");
+        return ArticlePipeline::process($this)->content;
     }
 
     public function setContent(string $content): self

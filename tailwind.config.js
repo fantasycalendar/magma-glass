@@ -8,6 +8,7 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './app/Services/ArticleParser/ArticlePipeline.php',
         './app/Services/ArticleParser/Pipeline/*.php',
         './app/Services/MenuBuilder.php',
     ],
