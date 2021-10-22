@@ -12,7 +12,7 @@ class Article
     public string $name;
     public string $path;
     public Collection $tags;
-    public Collection $blocks;
+    private Collection $frontMatter;
 
     public function __construct($name, $path, $contents, $tags = [])
     {
@@ -20,7 +20,6 @@ class Article
         $this->content = $contents;
         $this->path = $path;
         $this->tags = collect($tags);
-        $this->blocks = $this->blockify();
     }
 
     /**
@@ -31,11 +30,6 @@ class Article
     public function nameIsHeading(): bool
     {
         return substr($this->content, strpos($this->content, "\n")) == '# ' . $this->name;
-    }
-
-    public function getBlocks(): Collection
-    {
-        return $this->blockify()->keyBy('id');
     }
 
     /**
@@ -71,8 +65,8 @@ class Article
         return $this;
     }
 
-    private function blockify(): Collection
+    public function setFrontMatter($frontMatter)
     {
-        return collect(preg_split('/\n{2}+/', $this->content))->mapInto(ArticleBlock::class);
+        $this->frontMatter = collect($frontMatter);
     }
 }

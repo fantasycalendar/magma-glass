@@ -11,13 +11,14 @@ class ArticleTagParser implements \League\CommonMark\Parser\Inline\InlineParserI
 
     public function getMatchDefinition(): InlineParserMatch
     {
-        return InlineParserMatch::regex('(^|\s)(#+[a-zA-Z0-9\-(_)]{1,})');
+        return InlineParserMatch::regex('(#+[a-zA-Z0-9\-(_)]{1,})');
     }
 
     public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
-        // The @ symbol must not have any other characters immediately prior
+
+        // The # symbol must not have any other characters immediately prior
         $previousChar = $cursor->peek(-1);
         if ($previousChar !== null && $previousChar !== ' ') {
             // peek() doesn't modify the cursor, so no need to restore state first
@@ -28,10 +29,16 @@ class ArticleTagParser implements \League\CommonMark\Parser\Inline\InlineParserI
         // Advance the cursor to the end of the match
         $cursor->advanceBy($inlineContext->getFullMatchLength());
 
-        // Grab the Twitter handle
+        // Grab the Tag
         [$tag] = $inlineContext->getSubMatches();
-        $profileUrl = route('tags', ['tag' => $tag]);
-        $inlineContext->getContainer()->appendChild(new Link($profileUrl, '@' . $tag));
+        $tagUrl = route('tag', ['tag' => $tag]);
+
+        $tagLink = new Link($tagUrl, $tag);
+        $tagLink->data['attributes'] = [
+            'class' => 'px-2 mr-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100'
+        ];
+
+        $inlineContext->getContainer()->appendChild($tagLink);
         return true;
     }
 }
