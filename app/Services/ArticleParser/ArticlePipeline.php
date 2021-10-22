@@ -3,6 +3,7 @@
 namespace App\Services\ArticleParser;
 
 use App\Models\Article;
+use App\Services\ArticleParser\InlineParser\ArticleTagParser;
 use App\Services\ArticleParser\Pipeline\StripYamlFrontMatter;
 use App\Services\ArticleParser\Pipeline\ConvertImageLinks;
 use App\Services\ArticleParser\Pipeline\ConvertMarkdownToHtml;
@@ -15,6 +16,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -45,6 +47,8 @@ class ArticlePipeline
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new DefaultAttributesExtension());
+
+        $environment->addInlineParser(new ArticleTagParser());
 
         $parser = new MarkdownConverter($environment);
         $article->setContent($parser->convertToHtml($article->content));
@@ -94,12 +98,10 @@ class ArticlePipeline
                 BlockQuote::class => [
                     'class' => ['p-2', 'm-2', 'border-l-2', 'border-gray-600', 'bg-gray-700', ''],
                 ],
-//                Paragraph::class => [
-//                    'class' => ['text-center', 'font-comic-sans'],
-//                ],
-//                Link::class => [
-//                    'class' => 'btn btn-link',
-//                    'target' => '_blank',
+//                Image::class => [
+//                    'style' => static function (Image $node) {
+//
+//                    }
 //                ],
             ],
         ];
