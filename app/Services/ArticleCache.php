@@ -154,7 +154,7 @@ class ArticleCache
         })->values();
     }
 
-    public function getImage($imageName)
+    public function getImagePath($imageName)
     {
         return $this->cache['articles'][strtolower(basename($imageName))]['path'];
     }

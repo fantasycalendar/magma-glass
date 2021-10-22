@@ -9,8 +9,8 @@ class WrapBlocks extends Pipe
 {
     public function parse(Article $article): Article
     {
-        return $block->setContent(
-            "<div id='{$block->id}' class='article-block'>" . $block->content . "</div>"
+        return $article->setContent(
+            "<div id='{$article->id}' class='article-block'>" . $article->content . "</div>"
         );
     }
 }

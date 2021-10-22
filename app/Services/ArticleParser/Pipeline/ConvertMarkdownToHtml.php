@@ -13,12 +13,12 @@ class ConvertMarkdownToHtml extends Pipe
     public function parse(Article $article): Article
     {
         $parser = new GithubFlavoredMarkdownConverter();
-        dump($block->content);
+        dump($article->content);
 
-        $block->setContent($parser->convertToHtml($block->content));
+        $article->setContent($parser->convertToHtml($article->content));
 
-        dump($block->content);
+        dump($article->content);
 
-        return $block;
+        return $article;
     }
 }

@@ -32,7 +32,7 @@ class ArticlePipeline
         IsolateTags::class,
         ConvertImageLinks::class,
         ConvertWikilinks::class,
-        ConvertMarkdownToHtml::class,
+//        ConvertMarkdownToHtml::class,
 //        StyleTables::class,
 //        WrapBlocks::class,
     ];
@@ -49,13 +49,13 @@ class ArticlePipeline
         $parser = new MarkdownConverter($environment);
         $article->setContent($parser->convertToHtml($article->content));
 
-        return $article;
-//        return (new Pipeline(app()))
-//            ->send($article)
-//            ->through(self::$steps)
-//            ->then(function(Article $article) {
-//                return $article;
-//            });
+//        return $article;
+        return (new Pipeline(app()))
+            ->send($article)
+            ->through(self::$steps)
+            ->then(function(Article $article) {
+                return $article;
+            });
     }
 
     private static function defaultAttributesConfig()

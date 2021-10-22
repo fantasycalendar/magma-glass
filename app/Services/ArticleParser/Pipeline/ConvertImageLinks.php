@@ -11,11 +11,11 @@ class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
 
     public function parse(Article $article): Article
     {
-        return $block->setContent(
+        return $article->setContent(
             preg_replace_callback(
                 static::$pattern,
                 [static::class, 'replaceImageLinks'],
-                $block->content
+                $article->content
             )
         );
     }

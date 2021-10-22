@@ -17,10 +17,10 @@ class StyleTables extends \App\Services\ArticleParser\Pipe
             '<td>' => '<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">'
         ];
 
-        return $block->setContent(str_replace(
+        return $article->setContent(str_replace(
             array_keys($replacements),
             array_values($replacements),
-            $block->content
+            $article->content
         ));
     }
 }
