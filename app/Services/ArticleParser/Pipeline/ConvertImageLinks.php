@@ -7,7 +7,7 @@ use App\Services\ArticleCache;
 
 class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
 {
-    public static string $pattern = '/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\]\])/';
+    public static string $pattern = '/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\|\d+)?(\]\])/';
 
     public function parse(Article $article): Article
     {
@@ -28,12 +28,17 @@ class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
      */
     private static function replaceImageLinks($matches): string
     {
-        dd($matches);
         // Filename . Ext
         $filename = $matches[2] . $matches[3];
 
         if(app()->make('articles')->hasImage($filename)) {
             $link = wikilink($filename);
+
+            if(strlen($matches[4])) {
+                $width = substr($matches[4], 1);
+                return sprintf("<div class='inline-flex flex-col p-2 border bg-gray-100 shadow-sm my-6 dark:bg-gray-700 dark:border-gray-600 rounded'><img style='width: {$width}px' class='cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='text-gray-400 pt-4'>%s</div></div>", $link, $link, $filename);
+            }
+
             return sprintf("<div class='flex flex-col p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center'><img class='m-auto text-center cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='text-gray-400 pt-6'>%s</div></div>", $link, $link, $filename);
         }
 
