@@ -149,7 +149,7 @@ class ArticleCache
 
     public function search($searchTerm)
     {
-        return $this->cache->filter(function($article) use ($searchTerm) {
+        return $this->cache['articles']->filter(function($article) use ($searchTerm) {
             return Str::contains(strtolower($article['title']), strtolower($searchTerm));
         })->values();
     }
