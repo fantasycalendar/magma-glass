@@ -13,7 +13,8 @@ export default() => ({
 
     init() {
         console.log('Initing');
-        if(!location.pathname.startsWith('/a/')) {
+        if(!location.pathname.startsWith('/a')) {
+            console.log(location.pathname);
             this.loaded = true;
             return;
         }

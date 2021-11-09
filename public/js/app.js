@@ -5402,7 +5402,8 @@ __webpack_require__.r(__webpack_exports__);
     init: function init() {
       console.log('Initing');
 
-      if (!location.pathname.startsWith('/a/')) {
+      if (!location.pathname.startsWith('/a')) {
+        console.log(location.pathname);
         this.loaded = true;
         return;
       }
