@@ -34,10 +34,10 @@ class ConvertWikilinks extends \App\Services\ArticleParser\Pipe
         }
 
         if(app()->make('articles')->hasArticle($linkTarget)) {
-            return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", wikilink($linkTarget), $linkLabel);
+            return sprintf("<a class='text-teal-600 dark:text-teal-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", `%s`)'>%s</a>", wikilink($linkTarget), addslashes($linkLabel));
         }
 
-        return sprintf("<a class='text-rose-700 dark:text-rose-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", \"%s\")'>%s</a>", $linkTarget, $linkLabel);
+        return sprintf("<a class='text-rose-700 dark:text-rose-500 font-semibold' href='javascript:' @click='\$dispatch(\"article-change\", `%s`)'>%s</a>", addslashes($linkLabel), $linkTarget);
     }
 
 }
