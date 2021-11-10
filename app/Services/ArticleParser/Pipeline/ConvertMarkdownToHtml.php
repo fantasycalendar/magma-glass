@@ -50,7 +50,7 @@ class ConvertMarkdownToHtml extends Pipe
         return [
             'default_attributes' => [
                 Table::class => [
-                    'class' => ['min-w-full', 'divide-y', 'divide-gray-800', 'mb-8'],
+                    'class' => ['min-w-full', 'max-w-full', 'divide-y', 'divide-gray-800', 'mb-8', 'mt-4'],
                 ],
                 TableSection::class => [
                     'class' => static function (TableSection $node) {
@@ -72,7 +72,7 @@ class ConvertMarkdownToHtml extends Pipe
                         }
 
                         if($node->getType() == 'data') {
-                            return 'px-6 py-4 whitespace-nowrap text-sm text-gray-200';
+                            return 'px-6 py-4 text-sm text-gray-200';
                         }
 
                         return null;
