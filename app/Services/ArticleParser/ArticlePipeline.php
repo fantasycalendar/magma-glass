@@ -3,7 +3,6 @@
 namespace App\Services\ArticleParser;
 
 use App\Models\Article;
-use App\Services\ArticleParser\Pipeline\StripYamlFrontMatter;
 use App\Services\ArticleParser\Pipeline\ConvertImageLinks;
 use App\Services\ArticleParser\Pipeline\ConvertMarkdownToHtml;
 use App\Services\ArticleParser\Pipeline\ConvertWikilinks;
