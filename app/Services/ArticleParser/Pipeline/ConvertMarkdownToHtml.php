@@ -23,17 +23,7 @@ class ConvertMarkdownToHtml extends Pipe
 {
     public function parse(Article $article): Article
     {
-        $environment = new Environment(static::defaultAttributesConfig());
-
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new GithubFlavoredMarkdownExtension());
-        $environment->addExtension(new AutolinkExtension());
-        $environment->addExtension(new DefaultAttributesExtension());
-        $environment->addExtension(new FrontMatterExtension());
-
-        $environment->addInlineParser(new ArticleTagParser());
-
-        $parser = new MarkdownConverter($environment);
+        $parser = $this->createParser();
 
         $parsed = $parser->convertToHtml($article->content);
 
@@ -45,7 +35,7 @@ class ConvertMarkdownToHtml extends Pipe
     }
 
 
-    private static function defaultAttributesConfig()
+    private static function defaultAttributesConfig(): array
     {
         return [
             'default_attributes' => [
@@ -95,5 +85,20 @@ class ConvertMarkdownToHtml extends Pipe
                 ],
             ],
         ];
+    }
+
+    private function createParser(): MarkdownConverter
+    {
+        $environment = new Environment(static::defaultAttributesConfig());
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment->addExtension(new AutolinkExtension());
+        $environment->addExtension(new DefaultAttributesExtension());
+        $environment->addExtension(new FrontMatterExtension());
+
+        $environment->addInlineParser(new ArticleTagParser());
+
+        return new MarkdownConverter($environment);
     }
 }

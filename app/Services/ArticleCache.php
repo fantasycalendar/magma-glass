@@ -31,6 +31,9 @@ class ArticleCache
     public function allWithTag($tag)
     {
         return $this->cache['articles']->filter(function($article) use ($tag) {
+//            if($article['tags']->count()) {
+//                dd($article['tags']);
+//            }
             return $article['tags']->contains("#$tag");
         });
     }
@@ -53,9 +56,19 @@ class ArticleCache
         return collect(Storage::disk('articles')->allFiles())
             ->reject(fn($path) => Str::startsWith($path, '.obsidian/'))
             ->mapWithKeys(function($path) {
-                $content = Str::of(Storage::disk('articles')->get($path));
-                $tags = $content->matchAll(IsolateTags::$pattern);
-                $links = $content->matchAll('/\[\[(.+?)\]\]/u')->reject(fn($string) => Str::endsWith($string, ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif', '.tiff']));
+                $content = '';
+                $tags = collect();
+                $links = collect();
+
+                if(Str::endsWith($path, '.md')) {
+                    $content = Str::of(Storage::disk('articles')->get($path));
+                    $tags = $content->matchAll('/\B(\#[a-zA-Z-]+\b)(?!;)/m');
+//                    if($tags->count()) {
+//                        dump($content);
+//                        dump($tags);
+//                    }
+                    $links = $content->matchAll('/\[\[(.+?)\]\]/u')->reject(fn($string) => Str::endsWith($string, ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif', '.tiff']));
+                }
 
                 return [
                     strtolower(basename($path)) => [

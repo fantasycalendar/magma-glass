@@ -31,6 +31,7 @@ class ArticleTagParser implements \League\CommonMark\Parser\Inline\InlineParserI
 
         // Grab the Tag
         [$tag] = $inlineContext->getSubMatches();
+        $tag = substr($tag, 1);
         $tagUrl = route('tag', ['tag' => $tag]);
 
         $tagLink = new Link($tagUrl, $tag);
