@@ -6,6 +6,7 @@ use App\Jobs\RetrieveArticle;
 use App\Services\ArticleCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class ArticleController extends Controller
 {
@@ -21,7 +22,9 @@ class ArticleController extends Controller
     {
         app()->make('articles')->clearCache();
 
-        return view('show_article');
+        return Inertia::render('Article/Index');
+
+//        return view('layouts.app');
     }
 
     public function articleJson(Request $request)

@@ -18,10 +18,14 @@
         "lodash": "^4.17.19",
         "postcss": "^8.2.1",
         "postcss-import": "^12.0.1",
-        "tailwindcss": "^2.0.2"
+        "tailwindcss": "^2.0.2",
+        "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "@inertiajs/inertia": "^0.10.1",
+        "@inertiajs/inertia-vue3": "^0.5.2",
         "highlight.js": "^11.2.0",
-        "hotkeys-js": "^3.8.7"
+        "hotkeys-js": "^3.8.7",
+        "vue": "^3.2.21"
     }
 }

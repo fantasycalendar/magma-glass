@@ -5,18 +5,6 @@ import hljs from 'highlight.js';
 hljs.configure({languages:[]});
 window.hljs = hljs;
 
-// Alpine JS components/modules
-import app from './magma-glass/app';
-import fileTree from './magma-glass/file-tree';
-
-import Alpine from 'alpinejs';
-window.Alpine = Alpine;
-
-Alpine.data('app', app);
-Alpine.data('fileTree', fileTree);
-
-Alpine.start();
-
 // Hotkeys
 import hotkeys from 'hotkeys-js';
 
@@ -54,3 +42,15 @@ hotkeys('ctrl+f5,ctrl+shift+r', function(event, handler){
     url.searchParams.append('cold_boot', 'true')
     self.location = url;
 });
+
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/inertia-vue3'
+
+createInertiaApp({
+    resolve: name => require(`./Pages/${name}`),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el)
+    },
+})
