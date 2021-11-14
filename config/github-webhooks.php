@@ -22,6 +22,7 @@ return [
      * You can use "*" to let a job handle all sent webhook types
      */
     'jobs' => [
+        '*' => \App\Jobs\GithubPushWebhookJob::class,
         // 'ping' => \App\Jobs\GitHubWebhooks\HandlePingWebhook::class,
         // 'issues.opened' => \App\Jobs\GitHubWebhooks\HandleIssueOpenedWebhookJob::class,
         // '*' => \App\Jobs\GitHubWebhooks\HandleAllWebhooks::class
@@ -31,7 +32,7 @@ return [
      * This model will be used to store all incoming webhooks.
      * It should be or extend `Spatie\GitHubWebhooks\Models\GitHubWebhookCall`
      */
-    'model' => WebhookStubModel::class,
+    'model' => GitHubWebhookCall::class,
 
     /*
      * When running `php artisan model:prune` all stored GitHub webhook calls
@@ -39,7 +40,7 @@ return [
      *
      * More info on pruning: https://laravel.com/docs/8.x/eloquent#pruning-models
      */
-    'prune_webhook_calls_after_days' => 10,
+    'prune_webhook_calls_after_days' => 0,
 
     /*
      * The classname of the job to be used. The class should equal or extend

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -30,7 +31,14 @@ class WebhookStubModel extends GitHubWebhookCall
         logger()->error($exception->getCode());
         logger()->error($exception->getMessage());
         logger()->error($exception->getTraceAsString());
-        
+
+        return $this;
+    }
+
+    public function clearException(): self
+    {
+        $this->exception = null;
+
         return $this;
     }
 }
