@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -84,8 +85,19 @@ class SourceFromGithub extends Command
         // Do the file things!
         $this->emptyArticleRoot();
 
-        rmdir(Storage::disk('articles')->path(''));
-        rename($cloneTo . $repoSubdir, Storage::disk('articles')->path('/'));
+        $articlesDisk = Storage::disk('articles');
+        $disk = Storage::build([
+            'driver' => 'local',
+            'root' => $cloneTo . $repoSubdir
+        ]);
+
+        foreach($disk->allDirectories() as $directory) {
+            File::moveDirectory($disk->path($directory), $articlesDisk->path($directory));
+        }
+
+        foreach($disk->allFiles() as $file) {
+            File::move($disk->path($file), $articlesDisk->path($file));
+        }
 
         dump(Storage::disk('articles')->allDirectories());
 
