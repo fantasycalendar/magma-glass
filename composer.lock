@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8253da649d93fc915a98cf9388c72ab7",
+    "content-hash": "682cfe77097f7ffb858d4da7e79866c6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5629,6 +5629,96 @@
                 }
             ],
             "time": "2021-07-29T06:20:01+00:00"
+        },
+        {
+            "name": "symplify/git-wrapper",
+            "version": "9.4.70",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symplify/git-wrapper.git",
+                "reference": "6181534a10e089e94b38858574215c6cb7f877be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symplify/git-wrapper/zipball/6181534a10e089e94b38858574215c6cb7f877be",
+                "reference": "6181534a10e089e94b38858574215c6cb7f877be",
+                "shasum": ""
+            },
+            "require": {
+                "nette/utils": "^3.2",
+                "php": ">=8.0",
+                "symfony/event-dispatcher": "^5.3|^6.0",
+                "symfony/process": "^5.3|^6.0"
+            },
+            "conflict": {
+                "symplify/amnesia": "<9.4.70",
+                "symplify/astral": "<9.4.70",
+                "symplify/autowire-array-parameter": "<9.4.70",
+                "symplify/coding-standard": "<9.4.70",
+                "symplify/composer-json-manipulator": "<9.4.70",
+                "symplify/config-transformer": "<9.4.70",
+                "symplify/console-color-diff": "<9.4.70",
+                "symplify/console-package-builder": "<9.4.70",
+                "symplify/easy-ci": "<9.4.70",
+                "symplify/easy-coding-standard": "<9.4.70",
+                "symplify/easy-hydrator": "<9.4.70",
+                "symplify/easy-testing": "<9.4.70",
+                "symplify/latte-phpstan-compiler": "<9.4.70",
+                "symplify/markdown-diff": "<9.4.70",
+                "symplify/monorepo-builder": "<9.4.70",
+                "symplify/package-builder": "<9.4.70",
+                "symplify/php-config-printer": "<9.4.70",
+                "symplify/phpstan-extensions": "<9.4.70",
+                "symplify/phpstan-rules": "<9.4.70",
+                "symplify/psr4-switcher": "<9.4.70",
+                "symplify/rule-doc-generator": "<9.4.70",
+                "symplify/rule-doc-generator-contracts": "<9.4.70",
+                "symplify/simple-php-doc-parser": "<9.4.70",
+                "symplify/skipper": "<9.4.70",
+                "symplify/smart-file-system": "<9.4.70",
+                "symplify/symfony-php-config": "<9.4.70",
+                "symplify/symfony-static-dumper": "<9.4.70",
+                "symplify/symplify-kernel": "<9.4.70",
+                "symplify/template-phpstan-compiler": "<9.4.70",
+                "symplify/twig-phpstan-compiler": "<9.4.70",
+                "symplify/vendor-patches": "<9.4.70"
+            },
+            "require-dev": {
+                "ondram/ci-detector": "^4.1",
+                "phpunit/phpunit": "^9.5",
+                "psr/log": "^1.1",
+                "symplify/smart-file-system": "^9.4.70"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symplify\\GitWrapper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP wrapper around the Git command line utility.",
+            "keywords": [
+                "cli",
+                "git",
+                "git wrapper"
+            ],
+            "support": {
+                "source": "https://github.com/symplify/git-wrapper/tree/9.4.70"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-10-02T16:06:08+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

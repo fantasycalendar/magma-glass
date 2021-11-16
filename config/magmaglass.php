@@ -8,5 +8,5 @@ return [
     'github_deploy_key' => env('GITHUB_DEPLOY_KEY', null),
     'github_repo_subdir' => env('GITHUB_REPO_SUBDIR', ''),
 
-    'github_deploy_key_path' => env('GITHUB_DEPLOY_KEY_PATH', '/app/storage/app/id_rsa')
+    'github_deploy_key_path' => env('GITHUB_DEPLOY_KEY_PATH', 'app/id_rsa')
 ];

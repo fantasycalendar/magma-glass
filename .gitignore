@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/gittemp
+/storage/notes
 /vendor
 .env
 .env.backup

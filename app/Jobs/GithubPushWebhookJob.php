@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\GitHubWebhooks\Models\GitHubWebhookCall;
 
 class GithubPushWebhookJob implements ShouldQueue
@@ -24,8 +25,10 @@ class GithubPushWebhookJob implements ShouldQueue
 
     public function handle()
     {
-        $payload = $this->webhookCall->payload();
+        // We got a new push webhook! Go clone the latest, stat!
 
-        logger()->info($payload);
+        Artisan::call('github:source-latest', [
+            '--silent' => 1
+        ]);
     }
 }
