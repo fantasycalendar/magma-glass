@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 cd /app/ || exit 1;
 
+mkdir -p /app/storage/app
+mkdir -p /app/storage/logs
+chown www-data:www-data /app/storage/logs
+
 SSH_KEYFILE=/app/storage/app/id_rsa
 if test -f "$SSH_KEYFILE"; then
     echo "$SSH_KEYFILE exists."
@@ -28,15 +32,16 @@ else
     echo "Github deployment key generated! Starting services."
 fi
 
-echo "Creating sqlite database"
-touch database/database.sqlite
-php artisan migrate --force
-
 service redis-server start
 
-php artisan github:source-latest
-php artisan optimize
-php artisan route:cache
-php artisan queue:listen &
+echo "Creating sqlite database"
+runuser -u www-data -- touch database/database.sqlite
+runuser -u www-data -- php artisan migrate --force
+
+runuser -u www-data -- php artisan github:source-latest
+runuser -u www-data -- php artisan optimize
+runuser -u www-data -- php artisan route:cache
+runuser -u www-data -- php artisan queue:listen &
+
 service nginx start
 php-fpm
