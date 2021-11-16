@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\ArticleCache;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -100,6 +101,9 @@ class SourceFromGithub extends Command
         }
 
         dump(Storage::disk('articles')->allDirectories());
+
+        cache()->forget('articles_cache');
+        cache()->forget('file_tree');
 
         return 0;
     }

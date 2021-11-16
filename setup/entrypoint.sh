@@ -28,6 +28,11 @@ else
     echo "Github deployment key generated! Starting services."
 fi
 
+echo "Creating sqlite database"
+touch database/database.sqlite
+php artisan migrate --force
+
+php artisan github:source-latest
 
 service redis-server start
 php artisan optimize
