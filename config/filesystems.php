@@ -56,6 +56,11 @@ return [
         'articles' => [
             'driver' => env('ARTICLE_DRIVER','local'),
             'root' => env('ARTICLE_ROOT', storage_path('notes'))
+        ],
+
+        'gittemp' => [
+            'driver' => 'local',
+            'root' => storage_path('gittemp')
         ]
 
     ],

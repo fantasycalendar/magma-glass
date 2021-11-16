@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f48718f18c9f4229c4e9a95fa133cba2",
+    "content-hash": "682cfe77097f7ffb858d4da7e79866c6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3023,6 +3023,209 @@
             "time": "2021-09-25T23:10:38+00:00"
         },
         {
+            "name": "spatie/laravel-github-webhooks",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-github-webhooks.git",
+                "reference": "ded122e3ad99ca62bd13720e0e31db5316208e1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-github-webhooks/zipball/ded122e3ad99ca62bd13720e0e31db5316208e1c",
+                "reference": "ded122e3ad99ca62bd13720e0e31db5316208e1c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.37",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.0",
+                "spatie/laravel-webhook-client": "^3.0.1"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.5",
+                "orchestra/testbench": "^6.19",
+                "pestphp/pest": "^1.11",
+                "spatie/laravel-ray": "^1.23",
+                "spatie/pest-plugin-test-time": "^0.0.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\GitHubWebhooks\\GitHubWebhooksServiceProvider"
+                    ],
+                    "aliases": {
+                        "GitHubWebhooks": "Spatie\\GitHubWebhooks\\GitHubWebhooksFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\GitHubWebhooks\\": "src",
+                    "Spatie\\GitHubWebhooks\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle GitHub webhooks in a Laravel application",
+            "homepage": "https://github.com/spatie/laravel-github-webhooks",
+            "keywords": [
+                "laravel",
+                "laravel-github-webhooks",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-github-webhooks/issues",
+                "source": "https://github.com/spatie/laravel-github-webhooks/tree/1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-28T13:52:53+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f710fe196c126fb9e0aee67eb5af49ad8f13f528",
+                "reference": "f710fe196c126fb9e0aee67eb5af49ad8f13f528",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0|^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^9.3",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src",
+                    "Spatie\\LaravelPackageTools\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.9.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-09-21T13:06:51+00:00"
+        },
+        {
+            "name": "spatie/laravel-webhook-client",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-webhook-client.git",
+                "reference": "e100b8476f46ff859d6bceafe5717405cf18bbcb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/e100b8476f46ff859d6bceafe5717405cf18bbcb",
+                "reference": "e100b8476f46ff859d6bceafe5717405cf18bbcb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/bus": "^8.50",
+                "illuminate/database": "^8.50",
+                "illuminate/support": "^8.50",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.3",
+                "spatie/laravel-ray": "^1.24"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\WebhookClient\\WebhookClientServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\WebhookClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Receive webhooks in Laravel apps",
+            "homepage": "https://github.com/spatie/laravel-webhook-client",
+            "keywords": [
+                "laravel-webhook-client",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-webhook-client/issues",
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-07-25T22:20:05+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.7",
             "source": {
@@ -5426,6 +5629,96 @@
                 }
             ],
             "time": "2021-07-29T06:20:01+00:00"
+        },
+        {
+            "name": "symplify/git-wrapper",
+            "version": "9.4.70",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symplify/git-wrapper.git",
+                "reference": "6181534a10e089e94b38858574215c6cb7f877be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symplify/git-wrapper/zipball/6181534a10e089e94b38858574215c6cb7f877be",
+                "reference": "6181534a10e089e94b38858574215c6cb7f877be",
+                "shasum": ""
+            },
+            "require": {
+                "nette/utils": "^3.2",
+                "php": ">=8.0",
+                "symfony/event-dispatcher": "^5.3|^6.0",
+                "symfony/process": "^5.3|^6.0"
+            },
+            "conflict": {
+                "symplify/amnesia": "<9.4.70",
+                "symplify/astral": "<9.4.70",
+                "symplify/autowire-array-parameter": "<9.4.70",
+                "symplify/coding-standard": "<9.4.70",
+                "symplify/composer-json-manipulator": "<9.4.70",
+                "symplify/config-transformer": "<9.4.70",
+                "symplify/console-color-diff": "<9.4.70",
+                "symplify/console-package-builder": "<9.4.70",
+                "symplify/easy-ci": "<9.4.70",
+                "symplify/easy-coding-standard": "<9.4.70",
+                "symplify/easy-hydrator": "<9.4.70",
+                "symplify/easy-testing": "<9.4.70",
+                "symplify/latte-phpstan-compiler": "<9.4.70",
+                "symplify/markdown-diff": "<9.4.70",
+                "symplify/monorepo-builder": "<9.4.70",
+                "symplify/package-builder": "<9.4.70",
+                "symplify/php-config-printer": "<9.4.70",
+                "symplify/phpstan-extensions": "<9.4.70",
+                "symplify/phpstan-rules": "<9.4.70",
+                "symplify/psr4-switcher": "<9.4.70",
+                "symplify/rule-doc-generator": "<9.4.70",
+                "symplify/rule-doc-generator-contracts": "<9.4.70",
+                "symplify/simple-php-doc-parser": "<9.4.70",
+                "symplify/skipper": "<9.4.70",
+                "symplify/smart-file-system": "<9.4.70",
+                "symplify/symfony-php-config": "<9.4.70",
+                "symplify/symfony-static-dumper": "<9.4.70",
+                "symplify/symplify-kernel": "<9.4.70",
+                "symplify/template-phpstan-compiler": "<9.4.70",
+                "symplify/twig-phpstan-compiler": "<9.4.70",
+                "symplify/vendor-patches": "<9.4.70"
+            },
+            "require-dev": {
+                "ondram/ci-detector": "^4.1",
+                "phpunit/phpunit": "^9.5",
+                "psr/log": "^1.1",
+                "symplify/smart-file-system": "^9.4.70"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symplify\\GitWrapper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP wrapper around the Git command line utility.",
+            "keywords": [
+                "cli",
+                "git",
+                "git wrapper"
+            ],
+            "support": {
+                "source": "https://github.com/symplify/git-wrapper/tree/9.4.70"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/rectorphp",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-10-02T16:06:08+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
