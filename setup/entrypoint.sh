@@ -32,9 +32,9 @@ echo "Creating sqlite database"
 touch database/database.sqlite
 php artisan migrate --force
 
-php artisan github:source-latest
-
 service redis-server start
+
+php artisan github:source-latest
 php artisan optimize
 php artisan route:cache
 php artisan queue:listen &
