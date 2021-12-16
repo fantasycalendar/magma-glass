@@ -7,8 +7,8 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Support relative wikilinks
   - [x] Support non-relative wikilinks
   - [ ] Support [Obsidian Aliases](https://help.obsidian.md/How+to/Add+aliases+to+note)
-  - [ ] Fully support [Obsidian's embedded image format](https://help.obsidian.md/How+to/Embed+files#Developer+notes)
-    - [ ] Including resizing
+  - [x] Fully support [Obsidian's embedded image format](https://help.obsidian.md/How+to/Embed+files#Developer+notes)
+    - [x] Including resizing
   - [ ] Safely support `iframe` embeds
   - [ ] Allow marking certain folders as private
   - [x] Parsing/syntax highlighting of code blocks?
@@ -17,8 +17,8 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
 - [x] Have a traversible menu structure
 - [x] Search
   - [x] Needs to be quick and responsive
-- [ ] Update your Obsidian from a webhook
-  - [ ] Github webhook-on-commit -> Notifies Magma Glass -> Pulls your repo and updates it.
+- [x] Update your Obsidian from a webhook
+  - [x] Github webhook-on-commit -> Notifies Magma Glass -> Pulls your repo and updates it.
   - [ ] Safely, with rollback
 - [x] Need no database
 
