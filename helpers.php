@@ -21,3 +21,17 @@ if(!function_exists('wikilink')) {
         return route('no_such_article', ['articlePath' => $linkname]);
     }
 }
+
+if(!function_exists('app_logo')) {
+    function app_logo() {
+        return config('app.logo') ?? asset('images/logo.png');
+    }
+}
+
+if(!function_exists('app_logo_dark')) {
+    function app_logo_dark() {
+        return config('app.logo')
+            ? config('app.logo-dark') ?? app_logo()
+            : asset('images/logo-dark.png');
+    }
+}

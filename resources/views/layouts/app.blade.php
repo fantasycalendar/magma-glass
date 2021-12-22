@@ -44,6 +44,8 @@
                 document.documentElement.classList.toggle('dark', theme === 'dark');
                 document.querySelector('link[title="highlight-light"]').toggleAttribute('disabled', theme === 'dark');
                 document.querySelector('link[title="highlight-dark"]').toggleAttribute('disabled', theme !== 'dark');
+
+                return theme
             }
         </script>
     </head>
@@ -64,8 +66,12 @@
 
                     <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                         <div class="flex-shrink-0 flex items-center px-4 text-center">
-                            <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
-                            <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
+                            @if(strlen(app_logo()))
+                                <img class="h-18 mx-auto hidden dark:inline" src="{{ app_logo() }}" alt="Magma Glass">
+                                <img class="h-18 mx-auto dark:hidden" src="{{ app_logo_dark() }}" alt="Magma Glass">
+                            @else
+                                <span class="h-18 text-2xl mx-auto text-center dark:text-gray-200">{{ config('app.name') }}</span>
+                            @endif
                         </div>
                         <x-article-search></x-article-search>
                         <x-file-tree></x-file-tree>
@@ -73,7 +79,7 @@
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
                         <div class="grid place-items-center" x-html="article.title"></div>
                         <div>
-                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
+                            <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-200" @click="theme = window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                         </div>
                     </div>
                 </div>
@@ -85,10 +91,14 @@
                 <div class="flex flex-col w-64 md:w-80 2xl:w-96">
                     <div class="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
                         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                            <div class="flex items-center flex-shrink-0 px-4 text-center">
-                                <img class="h-18 mx-auto hidden dark:inline" src="{{ asset('images/logo.png') }}" alt="Magma Glass">
-                                <img class="h-18 mx-auto dark:hidden" src="{{ asset('images/logo-dark.png') }}" alt="Magma Glass">
-                            </div>
+                                <div class="flex items-center flex-shrink-0 px-4 text-center">
+                                    @if(strlen(app_logo()))
+                                        <img class="h-18 mx-auto hidden dark:inline" src="{{ app_logo() }}" alt="Magma Glass">
+                                        <img class="h-18 mx-auto dark:hidden" src="{{ app_logo_dark() }}" alt="Magma Glass">
+                                    @else
+                                        <span class="h-18 text-2xl mx-auto text-center dark:text-gray-200">{{ config('app.name') }}</span>
+                                    @endif
+                                </div>
                             <x-article-search :keyboardShortcut="true"></x-article-search>
                             <x-file-tree></x-file-tree>
                         </div>
@@ -97,7 +107,7 @@
                                 {{ $page_name ?? config('app.name') }}
                             </div>
                             <div>
-                                <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-600 transition-all ease-linear duration-300" @click="window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
+                                <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-600 transition-all ease-linear duration-200" @click="theme = window.toggleTheme();" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'logo' => env('APP_LOGO'),
+    'logo-dark' => env('APP_LOGO_DARK'),
 
     /*
     |--------------------------------------------------------------------------
