@@ -6,6 +6,7 @@ use App\Exceptions\ArticleNotFoundException;
 use App\Models\Article;
 use App\Services\ArticleParser\Pipeline\IsolateTags;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -52,6 +53,7 @@ class ArticleCache
     {
         return collect(Storage::disk('articles')->allFiles())
             ->reject(fn($path) => Str::startsWith($path, '.obsidian/'))
+            ->reject(fn($path) => in_array(explode('/', $path)[0] ?? '', config('magmaglass.ignored_paths')))
             ->mapWithKeys(function($path) {
                 $content = '';
                 $tags = collect();

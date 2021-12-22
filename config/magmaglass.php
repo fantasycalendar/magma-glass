@@ -2,6 +2,7 @@
 
 return [
     'cache_ttl' => env('ARTICLE_CACHE_TTL', 1),
+    'ignored_paths' => explode(',', env('IGNORED_PATHS', '')),
 
     'github_branches' => env('GITHUB_WATCH_BRANCHES', 'master'),
     'github_repo' => env('GITHUB_REPO', null),

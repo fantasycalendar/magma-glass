@@ -54,6 +54,7 @@ class MenuBuilder
     {
         $directories = collect(Storage::disk('articles')->directories($path))
             ->reject(fn($path) => Str::startsWith($path, '.obsidian'))
+            ->reject(fn($path) => in_array(explode('/', $path)[0] ?? '', config('magmaglass.ignored_paths')))
             ->map(function($directory){
             return [
                 'title' => basename($directory),
