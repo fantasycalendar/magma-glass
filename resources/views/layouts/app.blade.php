@@ -20,6 +20,7 @@
 {{--              href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/default.min.css">--}}
 
         <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         <script>
@@ -147,5 +148,11 @@
                 <img :src="shownImage" alt="" class="m-6 cursor-default shadow-lg" @click.away="hideImage">
             </div>
         </div>
+
+        <script>
+            mermaid.initialize({
+                theme: (window.theme === 'dark' ? 'dark' : 'base')
+            });
+        </script>
     </body>
 </html>

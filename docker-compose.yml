@@ -23,7 +23,7 @@ services:
         volumes:
             - ./:/var/task
             - /tmp/var-cache:/var/task/cache
-            - /run/media/axel/DATA/LinuxData/home/axel/.config/obsidian/Obsidian Help:/var/task/storage/notes
+            - /mnt/c/Users/black/AppData/Roaming/obsidian/Obsidian Help:/var/task/storage/notes
         user: "1000:1000"
 
     redis:

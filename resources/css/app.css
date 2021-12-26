@@ -106,4 +106,8 @@
         opacity: .3;
         pointer-events: all;
     }
+
+    .language-mermaid {
+        @apply grid place-items-center p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center;
+    }
 }

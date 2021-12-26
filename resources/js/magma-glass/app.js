@@ -55,6 +55,7 @@ export default() => ({
         }
 
         hljs.highlightAll();
+        mermaid.init(undefined, "code.language-mermaid");
     },
 
     updateArticle(path, back = false) {
@@ -109,6 +110,7 @@ export default() => ({
     postRender() {
         console.log('postRender');
         hljs.highlightAll();
+        mermaid.init(undefined, "code.language-mermaid");
     },
 
     fetchSearchResults($event) {

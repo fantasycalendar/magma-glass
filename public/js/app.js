@@ -5443,6 +5443,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       hljs.highlightAll();
+      mermaid.init(undefined, "code.language-mermaid");
     },
     updateArticle: function updateArticle(path) {
       var _this = this;
@@ -5501,6 +5502,7 @@ __webpack_require__.r(__webpack_exports__);
     postRender: function postRender() {
       console.log('postRender');
       hljs.highlightAll();
+      mermaid.init(undefined, "code.language-mermaid");
     },
     fetchSearchResults: function fetchSearchResults($event) {
       var _this2 = this;
