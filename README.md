@@ -24,7 +24,7 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
 
 ### Wishlist
 - [ ] Have Obsidian's fancy graph visualization (Yeah, right. Maybe one day when I learn graph theory.)
-- [ ] Minor edits, maybe?
+- ~~[ ] Minor edits, maybe?~~ I have decided against this. No real good reason for ... well, _any_ edits to come from Magma Glass. Instead, just put your Obsidian vault in a Github repo, configure Magma Glass, and push.
 
 ## Who is it for?
 Me. Mostly. 
