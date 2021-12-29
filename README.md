@@ -10,9 +10,9 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Fully support [Obsidian's embedded image format](https://help.obsidian.md/How+to/Embed+files#Developer+notes)
     - [x] Including resizing
   - [ ] Safely support `iframe` embeds
-  - [ ] Allow marking certain folders as private
+  - [x] Allow marking certain folders as private
   - [x] Parsing/syntax highlighting of code blocks?
-  - [ ] Mermaid.js
+  - [x] Mermaid.js
   - [ ] Mathjax
 - [x] Have a traversible menu structure
 - [x] Search

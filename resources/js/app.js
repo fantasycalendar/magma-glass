@@ -3,7 +3,9 @@ require('./bootstrap');
 // Syntax highlighting in code blocks
 import hljs from 'highlight.js';
 hljs.configure({languages:[]});
+
 window.hljs = hljs;
+
 
 // Alpine JS components/modules
 import app from './magma-glass/app';

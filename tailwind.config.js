@@ -4,14 +4,19 @@ const colors = require('tailwindcss/colors')
 module.exports = {
     mode: 'jit',
     darkMode: 'class',
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-        './app/Services/ArticleParser/ArticlePipeline.php',
-        './app/Services/ArticleParser/Pipeline/*.php',
-        './app/Services/MenuBuilder.php',
-    ],
+    purge: {
+        content: [
+            './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+            './storage/framework/views/*.php',
+            './resources/views/**/*.blade.php',
+            './app/Services/ArticleParser/ArticlePipeline.php',
+            './app/Services/ArticleParser/Pipeline/*.php',
+            './app/Services/MenuBuilder.php',
+        ],
+        safelist: [
+            'language-mermaid',
+        ]
+    },
 
     theme: {
         extend: {

@@ -20,6 +20,7 @@
 {{--              href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/default.min.css">--}}
 
         <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         <script>
@@ -66,12 +67,7 @@
 
                     <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                         <div class="flex-shrink-0 flex items-center px-4 text-center">
-                            @if(strlen(app_logo()))
-                                <img class="h-18 mx-auto hidden dark:inline" src="{{ app_logo() }}" alt="Magma Glass">
-                                <img class="h-18 mx-auto dark:hidden" src="{{ app_logo_dark() }}" alt="Magma Glass">
-                            @else
-                                <span class="h-18 text-2xl mx-auto text-center dark:text-gray-200">{{ config('app.name') }}</span>
-                            @endif
+                            <x-application-logo></x-application-logo>
                         </div>
                         <x-article-search></x-article-search>
                         <x-file-tree></x-file-tree>
@@ -92,12 +88,7 @@
                     <div class="flex-1 flex flex-col min-h-0 bg-gray-50 dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
                         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                                 <div class="flex items-center flex-shrink-0 px-4 text-center">
-                                    @if(strlen(app_logo()))
-                                        <img class="h-18 mx-auto hidden dark:inline" src="{{ app_logo() }}" alt="Magma Glass">
-                                        <img class="h-18 mx-auto dark:hidden" src="{{ app_logo_dark() }}" alt="Magma Glass">
-                                    @else
-                                        <span class="h-18 text-2xl mx-auto text-center dark:text-gray-200">{{ config('app.name') }}</span>
-                                    @endif
+                                    <x-application-logo></x-application-logo>
                                 </div>
                             <x-article-search :keyboardShortcut="true"></x-article-search>
                             <x-file-tree></x-file-tree>
@@ -147,5 +138,11 @@
                 <img :src="shownImage" alt="" class="m-6 cursor-default shadow-lg" @click.away="hideImage">
             </div>
         </div>
+
+        <script>
+            mermaid.initialize({
+                theme: (window.theme === 'dark' ? 'dark' : 'base')
+            });
+        </script>
     </body>
 </html>
