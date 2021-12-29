@@ -5442,8 +5442,7 @@ __webpack_require__.r(__webpack_exports__);
         this.loaded = true;
       }
 
-      hljs.highlightAll();
-      mermaid.init(undefined, "code.language-mermaid");
+      this.postRender();
     },
     updateArticle: function updateArticle(path) {
       var _this = this;
@@ -5503,6 +5502,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log('postRender');
       hljs.highlightAll();
       mermaid.init(undefined, "code.language-mermaid");
+      MathJax.typeset();
     },
     fetchSearchResults: function fetchSearchResults($event) {
       var _this2 = this;

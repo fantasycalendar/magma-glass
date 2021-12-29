@@ -54,8 +54,7 @@ export default() => ({
             this.loaded = true;
         }
 
-        hljs.highlightAll();
-        mermaid.init(undefined, "code.language-mermaid");
+        this.postRender();
     },
 
     updateArticle(path, back = false) {
@@ -111,6 +110,7 @@ export default() => ({
         console.log('postRender');
         hljs.highlightAll();
         mermaid.init(undefined, "code.language-mermaid");
+        MathJax.typeset()
     },
 
     fetchSearchResults($event) {

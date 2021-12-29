@@ -16,11 +16,22 @@
         <link rel="stylesheet" href="{{ asset('css/highlightjs-dark.css') }}" title="highlight-dark">
         <link rel="stylesheet" href="{{ asset('css/highlightjs-light.css') }}" title="highlight-light">
 
-{{--        <link rel="stylesheet"--}}
-{{--              href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/default.min.css">--}}
-
         <script src="https://d3js.org/d3.v7.min.js"></script>
+
+        <!-- Mermaid -->
         <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+        <!-- Mathjax -->
+        <script>
+            MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']]
+                }
+            };
+        </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         <script>

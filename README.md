@@ -13,7 +13,7 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Allow marking certain folders as private
   - [x] Parsing/syntax highlighting of code blocks?
   - [x] Mermaid.js
-  - [ ] Mathjax
+  - [x] Mathjax
 - [x] Have a traversible menu structure
 - [x] Search
   - [x] Needs to be quick and responsive
