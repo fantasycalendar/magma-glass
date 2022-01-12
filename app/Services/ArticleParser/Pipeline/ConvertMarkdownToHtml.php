@@ -3,6 +3,7 @@
 namespace App\Services\ArticleParser\Pipeline;
 
 use App\Models\Article;
+use App\Services\ArticleParser\InlineParser\ArticleCommentParser;
 use App\Services\ArticleParser\InlineParser\ArticleTagParser;
 use App\Services\ArticleParser\Pipe;
 use League\CommonMark\Environment\Environment;
@@ -98,6 +99,7 @@ class ConvertMarkdownToHtml extends Pipe
         $environment->addExtension(new FrontMatterExtension());
 
         $environment->addInlineParser(new ArticleTagParser());
+        $environment->addInlineParser(new ArticleCommentParser());
 
         return new MarkdownConverter($environment);
     }

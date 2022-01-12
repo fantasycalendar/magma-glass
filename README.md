@@ -10,6 +10,7 @@ Yep! It's a looking glass for your [lava rocks](https://en.wikipedia.org/wiki/Ob
   - [x] Fully support [Obsidian's embedded image format](https://help.obsidian.md/How+to/Embed+files#Developer+notes)
     - [x] Including resizing
   - [ ] Safely support `iframe` embeds
+  - [ ] [Comments](https://help.obsidian.md/How+to/Format+your+notes#Comments)
   - [x] Allow marking certain folders as private
   - [x] Parsing/syntax highlighting of code blocks?
   - [x] Mermaid.js
