@@ -60,8 +60,9 @@
                 return theme
             }
         </script>
+        @livewireStyles
     </head>
-    <body id="app" class="font-sans antialiased" x-data="app" x-init="$nextTick(() => {postInit();});" @article-change.window="updateArticle($event.detail)" @popstate.window="updateArticle(decodeURI(location.pathname).substring(2), true)">
+    <body id="app" class="font-sans antialiased">
         <div class="h-screen flex overflow-hidden bg-white dark:bg-gray-800">
             <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true" :class="{ 'pointer-events-none': !sidebar }" x-cloak>
                 <div class="fixed inset-0 bg-gray-400 dark:bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300" aria-hidden="true" :class="{ 'opacity-100': sidebar, 'opacity-0': !sidebar }"  @click="sidebar = !sidebar" x-cloak></div>
@@ -80,11 +81,13 @@
                         <div class="flex-shrink-0 flex items-center px-4 text-center">
                             <x-application-logo></x-application-logo>
                         </div>
-                        <x-article-search></x-article-search>
+                        <livewire:article-search></livewire:article-search>
                         <x-file-tree></x-file-tree>
                     </div>
                     <div class="flex-shrink-0 flex justify-between align-middle bg-white dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
-                        <div class="grid place-items-center" x-html="article.title"></div>
+                        <div class="grid place-items-center" x-html="article.title">
+                            {{ $slot }}
+                        </div>
                         <div>
                             <i class="fa cursor-pointer p-2 border dark:border-gray-600 rounded dark:bg-gray-700 dark:hover:bg-gray-800 transition-all ease-linear duration-200" @click="theme = window.toggleTheme()" :class="{ 'fa-moon': theme === 'dark', 'fa-sun': theme === 'light' }"></i>
                         </div>
@@ -101,7 +104,7 @@
                                 <div class="flex items-center flex-shrink-0 px-4 text-center">
                                     <x-application-logo></x-application-logo>
                                 </div>
-                            <x-article-search :keyboardShortcut="true"></x-article-search>
+                            <livewire:article-search></livewire:article-search>
                             <x-file-tree></x-file-tree>
                         </div>
                         <div class="flex-shrink-0 flex justify-between align-middle bg-gray-50 dark:bg-gray-700 text-gray-400 font-medium dark:font-light p-4">
@@ -123,20 +126,20 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" @unless(strlen($mobile_header ?? false)) x-html="article.title" @endunless>
+                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4">
                         {{ $mobile_header ?? '' }}
                     </div>
                 </div>
                 <main class="bg-white dark:bg-gray-800 flex-1 relative z-0 overflow-y-auto focus:outline-none">
                     <div class="py-6 text-gray-700 dark:text-white">
                         <div class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8">
-                            <h1 class="text-4xl font-bold" @unless(strlen($header ?? false)) x-html="article.title" @endunless>
-                                {{ $header ?? '' }}
+                            <h1 class="text-4xl font-bold">
+                                {{ $header ?? 'No such article' }}
                             </h1>
                             <hr class="max-w-7xl mx-auto px-4 hidden md:block sm:px-6 lg:px-8 border-gray-300 dark:border-gray-700 my-8">
                         </div>
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" @unless(strlen($slot)) id="article-content" x-html="article.content" @endunless>
-                            {{ $slot ?? '' }}
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            {{ $slot ?? 'No such article' }}
                         </div>
                     </div>
                 </main>
@@ -155,5 +158,7 @@
                 theme: (window.theme === 'dark' ? 'dark' : 'base')
             });
         </script>
+
+    @livewireScripts
     </body>
 </html>

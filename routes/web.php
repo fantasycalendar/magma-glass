@@ -18,14 +18,17 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::githubWebhooks('update-source');
 
-Route::get('test', [\App\Http\Controllers\ArticleController::class, 'test']);
 Route::get('/image/{path}', [\App\Http\Controllers\ImageController::class, 'image'])->name('image')->where('path', '.*');
+
+
+Route::get('test', [\App\Http\Controllers\ArticleController::class, 'test']);
 Route::get('/tag/{tag}', [\App\Http\Controllers\ArticleController::class, 'tag'])->name('tag')->where('tag', '.*');
-Route::get('/linkData', [\App\Http\Controllers\ArticleController::class, 'linkData'])->name('linkData');
-Route::get('/get-article/', [\App\Http\Controllers\ArticleController::class, 'articleJson'])->name('articleJson');
-Route::get('/search/', [\App\Http\Controllers\ArticleController::class, 'search'])->name('search');
-Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
-Route::get('/a/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
+//Route::get('/linkData', [\App\Http\Controllers\ArticleController::class, 'linkData'])->name('linkData');
+//Route::get('/get-article/', [\App\Http\Controllers\ArticleController::class, 'articleJson'])->name('articleJson');
+//Route::get('/search/', [\App\Http\Controllers\ArticleController::class, 'search'])->name('search');
+//Route::get('/no_such_article', [\App\Http\Controllers\ArticleController::class, 'noSuchArticle'])->name('no_such_article');
+//Route::get('/a/{articlePath?}', [\App\Http\Controllers\ArticleController::class, 'index'])->name('article')->where('articlePath', '.*');
+Route::get('/a/{articlePath?}', \App\Http\Livewire\ArticlePage::class);
 Route::redirect('/', '/a/');
 
 

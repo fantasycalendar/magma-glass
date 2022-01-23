@@ -23,6 +23,11 @@ class Article
         $this->frontMatter = collect();
     }
 
+    public static function nonexistent($path): self
+    {
+        return new self("Not found", "## The file '$path' doesn't exist yet!", '',);
+    }
+
     /**
      * Determine whether the name of this article is also its heading
      *

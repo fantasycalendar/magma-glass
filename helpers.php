@@ -18,7 +18,7 @@ if(!function_exists('wikilink')) {
             return Str::substr($path, 0, Str::length($path) - 3);
         }
 
-        return route('no_such_article', ['articlePath' => $linkname]);
+        return \App\Models\Article::nonexistent($linkname);
     }
 }
 
