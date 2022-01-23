@@ -17,9 +17,4 @@ class ArticleSearch extends Component
             'searchResults' => app()->make('articles')->search($this->searchTerm)
         ]);
     }
-
-    public function search($searchTerm)
-    {
-        $this->searchTerm = $searchTerm;
-    }
 }
