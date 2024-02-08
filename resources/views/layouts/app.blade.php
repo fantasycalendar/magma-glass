@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @vite('resources/css/app.css')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 
         <link rel="stylesheet" href="{{ asset('css/highlightjs-dark.css') }}" title="highlight-dark">
@@ -32,7 +32,7 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        @vite('resources/js/app.js')
 
         <script>
             // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -123,7 +123,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div class="grid place-items-center text-gray-700 dark:text-white flex-grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" @unless(strlen($mobile_header ?? false)) x-html="article.title" @endunless>
+                    <div class="grid place-items-center text-gray-700 dark:text-white grow-1 overflow-x-scroll text-2xl flex-nowrap whitespace-nowrap pr-4" @unless(strlen($mobile_header ?? false)) x-html="article.title" @endunless>
                         {{ $mobile_header ?? '' }}
                     </div>
                 </div>

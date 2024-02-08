@@ -1,4 +1,4 @@
-require('./bootstrap');
+import './bootstrap';
 
 // Syntax highlighting in code blocks
 import hljs from 'highlight.js';
