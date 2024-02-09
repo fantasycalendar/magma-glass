@@ -8,7 +8,7 @@ WORKDIR /var/www/html
 
 RUN apt-get update -y \
     && apt-get install -y nginx curl gnupg \
-    && curl -sL https://deb.nodesource.com/setup_14.x  | bash - \
+    && curl -sL https://deb.nodesource.com/setup_20.x  | bash - \
     && apt-get update && apt-get install -y \
                nodejs \
                libfreetype6-dev \
@@ -31,7 +31,7 @@ RUN apt-get update -y \
     && mkdir -p /app/storage/framework/views \
     && mkdir -p /app/storage/framework/cache \
     && npm install --prefix /app/ \
-    && npm run production --prefix /app/ \
+    && npm run build --prefix /app/ \
     && rm -rf /app/node_modules \
     && /usr/local/bin/php /var/www/html/composer.phar install -d /app/ \
     && /usr/local/bin/php /var/www/html/composer.phar dump-auto -d /app/ \

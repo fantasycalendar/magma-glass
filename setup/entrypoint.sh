@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd /app/ || exit 1;
+cd /app/ || exit 2;
 
 mkdir -p /app/storage/app
 mkdir -p /app/storage/logs
