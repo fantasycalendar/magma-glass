@@ -45,7 +45,7 @@ class MenuBuilder
 
     public static function build()
     {
-        return cache()->remember('file_tree', config('magmaglass.cache_ttl'), function() {
+        return cache()->remember('file_tree', config('magmaglass.cache_ttl'), function () {
             return static::createStructure('/');
         });
     }
@@ -53,36 +53,40 @@ class MenuBuilder
     private static function createStructure(string $path)
     {
         $directories = collect(Storage::disk('articles')->directories($path))
-            ->reject(fn($path) => Str::startsWith($path, '.obsidian'))
-            ->reject(fn($path) => in_array(explode('/', $path)[0] ?? '', config('magmaglass.ignored_paths')))
-            ->map(function($directory){
-            return [
-                'title' => basename($directory),
-                'children' => static::createStructure($directory),
-                'icon' => static::$icons['folder'],
-                'path' => $directory
-            ];
-        });
+            ->reject(fn ($path) => Str::startsWith($path, '.obsidian'))
+            ->reject(fn ($path) => Str::startsWith($path, '.git'))
+            ->reject(fn ($path) => in_array(explode('/', $path)[0] ?? '', config('magmaglass.ignored_paths')))
+            ->map(function ($directory) {
+                return [
+                    'title' => basename($directory),
+                    'children' => static::createStructure($directory),
+                    'icon' => static::$icons['folder'],
+                    'path' => $directory,
+                ];
+            });
 
-        $files = collect(Storage::disk('articles')->files($path))->map(function($file){
-            $fileInfo = pathinfo($file);
-            $title = $fileInfo['filename'];
-            $icon = in_array(strtolower($title), ['home', 'start here', 'index'])
-                ? 'fa-home'
-                : static::resolveIcon($fileInfo['extension']);
+        $files = collect(Storage::disk('articles')->files($path))
+            ->reject(fn ($file) => Str::startsWith(basename($file), '.'))
+            ->map(function ($file) {
+                $fileInfo = pathinfo($file);
+                $title = $fileInfo['filename'];
+                $extension = $fileInfo['extension'] ?? '';
+                $icon = in_array(strtolower($title), ['home', 'start here', 'index'])
+                    ? 'fa-home'
+                    : static::resolveIcon($extension);
 
-            return [
-                'title' => $title,
-                'url' => wikilink($title),
-                'icon' => $icon,
-                'path' => $file
-            ];
-        });
+                return [
+                    'title' => $title,
+                    'url' => wikilink($title),
+                    'icon' => $icon,
+                    'path' => $file,
+                ];
+            });
 
-        return $directories->merge($files)->map(function($item){
+        return $directories->merge($files)->map(function ($item) {
             // Prepend an 'l' because this is used as a 'ref' in Alpine, and
             // JavaScript properties cannot start with a number.
-            $item['ref'] = 'l' . sha1($item['path']);
+            $item['ref'] = 'l'.sha1($item['path']);
 
             return $item;
         });
@@ -90,13 +94,11 @@ class MenuBuilder
 
     /**
      * Resolves a list of icon classes based on file extension
-     *
-     * @param $extension
-     * @return string
      */
     public static function resolveIcon($extension): string
     {
-        return self::$icons[self::$fileTypesByExtension[$extension]]
-            ?? self::$icons['unknown'];
+        $fileType = self::$fileTypesByExtension[$extension] ?? 'unknown';
+
+        return self::$icons[$fileType] ?? self::$icons['unknown'];
     }
 }
