@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Services\ArticleParser\ArticlePipeline;
 use Illuminate\Support\Collection;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class Article
 {
@@ -14,7 +13,7 @@ class Article
     public Collection $tags;
     private Collection $frontMatter;
 
-    public function __construct($name, $path, $contents, $tags = [])
+    public function __construct(string $name, string $path, string $contents, array|Collection $tags = [])
     {
         $this->name = $name;
         $this->content = $contents;
@@ -24,35 +23,39 @@ class Article
     }
 
     /**
-     * Determine whether the name of this article is also its heading
-     *
-     * @return bool
+     * Determine whether the first line of content is a heading matching the article name.
      */
     public function nameIsHeading(): bool
     {
-        return substr($this->content, strpos($this->content, "\n")) == '# ' . $this->name;
+        $firstNewline = strpos($this->content, "\n");
+        $firstLine = $firstNewline !== false
+            ? substr($this->content, 0, $firstNewline)
+            : $this->content;
+
+        return trim($firstLine) === '# ' . $this->name;
     }
 
     /**
-     * Removes the first line of the content
-     *
-     * @return $this
+     * Removes the first line of the content.
      */
     public function hideFirstLine(): self
     {
-        $this->content = substr($this->content, strpos($this->content, "\n") + 1);
+        $firstNewline = strpos($this->content, "\n");
+        if ($firstNewline !== false) {
+            $this->content = substr($this->content, $firstNewline + 1);
+        } else {
+            $this->content = '';
+        }
 
         return $this;
     }
 
     /**
-     * Gets the parsed content of this article
-     *
-     * @return string
+     * Gets the parsed (HTML) content of this article.
      */
-    public function getParsed()
+    public function getParsed(): string
     {
-        if($this->nameIsHeading()) {
+        if ($this->nameIsHeading()) {
             $this->hideFirstLine();
         }
 
@@ -66,8 +69,15 @@ class Article
         return $this;
     }
 
-    public function setFrontMatter($frontMatter)
+    public function setFrontMatter(array $frontMatter): self
     {
         $this->frontMatter = collect($frontMatter);
+
+        return $this;
+    }
+
+    public function getFrontMatter(): Collection
+    {
+        return $this->frontMatter;
     }
 }

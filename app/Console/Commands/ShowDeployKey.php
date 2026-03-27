@@ -7,43 +7,17 @@ use Illuminate\Support\Str;
 
 class ShowDeployKey extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'github:show-key';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Displays the path and contents of the deploy key being used to retrieve notes from Github.';
+    protected $description = 'Displays the public deploy key for adding to Github.';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         $source = config('magmaglass.github_deploy_key');
 
-        if($source !== null) {
-            $this->info("Key is passed in via GITHUB_DEPLOY_KEY env variable.");
-            $this->info("Key contents:");
-            $this->info($source);
+        if ($source !== null) {
+            $this->info('Key is passed in via GITHUB_DEPLOY_KEY env variable.');
+            $this->warn('Cannot display inline key contents for security reasons.');
 
             return 0;
         }
@@ -53,25 +27,19 @@ class ShowDeployKey extends Command
             ? $source
             : storage_path($source);
 
-        if(file_exists($keyPath)) {
-            $this->info("Key is a file, sourced from path:");
-            $this->info($source);
+        $publicKeyPath = $keyPath . '.pub';
+
+        if (file_exists($publicKeyPath)) {
+            $this->info('Public key (add this to GitHub as a deploy key):');
             $this->newLine();
-
-            $this->info("Private key:");
-            $this->info(file_get_contents($keyPath));
-
-            $this->info("Public key:");
-            $this->info(file_get_contents($keyPath.".pub"));
+            $this->line(file_get_contents($publicKeyPath));
 
             return 0;
         }
 
-        $this->error("Key is expected to be a file sourced from path:");
-        $this->error($keyPath);
-        $this->newLine();
-        $this->error("However, the file does not appear to exist!");
+        $this->error("Public key not found at: $publicKeyPath");
+        $this->error('Has the entrypoint generated a deploy key yet?');
 
-        return 0;
+        return 1;
     }
 }

@@ -27,61 +27,61 @@ class ConvertMarkdownToHtml extends Pipe
 
         $parsed = $parser->convertToHtml($article->content);
 
-        if($parsed instanceof RenderedContentWithFrontMatter) {
+        if ($parsed instanceof RenderedContentWithFrontMatter) {
             $article->setFrontMatter($parsed->getFrontMatter());
         }
 
         return $article->setContent($parsed);
     }
 
-
     private static function defaultAttributesConfig(): array
     {
         return [
             'default_attributes' => [
                 Table::class => [
-                    'class' => ['min-w-full', 'max-w-full', 'divide-y', 'divide-gray-800', 'mb-8', 'mt-4'],
+                    'class' => 'article-table',
                 ],
                 TableSection::class => [
                     'class' => static function (TableSection $node) {
-                        if($node->getType() == 'head') {
-                            return 'bg-gray-700';
+                        if ($node->getType() === 'head') {
+                            return 'article-table__head';
                         }
 
-                        if($node->getType() == 'body') {
-                            return 'bg-gray-700 divide-y divide-gray-800';
+                        if ($node->getType() === 'body') {
+                            return 'article-table__body';
                         }
 
                         return null;
-                    }
+                    },
                 ],
                 TableCell::class => [
                     'class' => static function (TableCell $node) {
-                        if($node->getType() == 'header') {
-                            return 'px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider';
+                        if ($node->getType() === 'header') {
+                            return 'article-table__header-cell';
                         }
 
-                        if($node->getType() == 'data') {
-                            return 'px-6 py-4 text-sm text-gray-200';
+                        if ($node->getType() === 'data') {
+                            return 'article-table__data-cell';
                         }
 
                         return null;
-                    }
+                    },
                 ],
                 BlockQuote::class => [
-                    'class' => ['p-2', 'm-2', 'border-l-2', 'border-gray-600', 'bg-gray-700', ''],
+                    'class' => 'article-blockquote',
                 ],
                 Image::class => [
                     'style' => static function (Image $node) {
-                        $imageAlt = $node->firstChild()->getLiteral();
+                        $imageAlt = $node->firstChild()?->getLiteral() ?? '';
 
-                        if(preg_match('/(\|\d+)$/', $imageAlt, $result)) {
+                        if (preg_match('/(\|\d+)$/', $imageAlt, $result)) {
                             $width = substr($result[1], 1);
+
                             return ["width: {$width}px;"];
                         }
 
                         return null;
-                    }
+                    },
                 ],
             ],
         ];

@@ -3,9 +3,9 @@
 namespace App\Services\ArticleParser\Pipeline;
 
 use App\Models\Article;
-use App\Services\ArticleCache;
+use App\Services\ArticleParser\Pipe;
 
-class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
+class ConvertImageLinks extends Pipe
 {
     public static string $pattern = '/(\!\[\[)(.*)(.png|.jpg|.jpeg|.gif|.bmp|.tif|.tiff)(\|\d+)?(\]\])/';
 
@@ -20,28 +20,37 @@ class ConvertImageLinks extends \App\Services\ArticleParser\Pipe
         );
     }
 
-    /**
-     * Replaces image links with the image they reference
-     *
-     * @param $matches
-     * @return string
-     */
-    private static function replaceImageLinks($matches): string
+    private static function replaceImageLinks(array $matches): string
     {
-        // Filename . Ext
         $filename = $matches[2] . $matches[3];
 
-        if(app()->make('articles')->hasImage($filename)) {
+        if (app()->make('articles')->hasImage($filename)) {
             $link = wikilink($filename);
+            $escapedFilename = e($filename);
 
-            if(strlen($matches[4])) {
+            if (strlen($matches[4] ?? '')) {
                 $width = substr($matches[4], 1);
-                return sprintf("<div class='inline-flex flex-col p-2 border bg-gray-100 shadow-sm my-6 dark:bg-gray-700 dark:border-gray-600 rounded'><img style='width: {$width}px' class='cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='text-gray-400 pt-4'>%s</div></div>", $link, $link, $filename);
+
+                return sprintf(
+                    "<div class='vault-image vault-image--sized'><img style='width: %dpx' class='cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='vault-image__caption'>%s</div></div>",
+                    (int) $width,
+                    $link,
+                    $link,
+                    $escapedFilename
+                );
             }
 
-            return sprintf("<div class='flex flex-col p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center'><img class='m-auto text-center cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='text-gray-400 pt-6'>%s</div></div>", $link, $link, $filename);
+            return sprintf(
+                "<div class='vault-image'><img class='m-auto text-center cursor-pointer' @click=\"\$dispatch('open-image', '%s')\" src='%s' /><div class='vault-image__caption'>%s</div></div>",
+                $link,
+                $link,
+                $escapedFilename
+            );
         }
 
-        return "<a href='http://placeholder.com/'><img src='https://via.placeholder.com/800x120?text=No+Image+Found' /></a>";
+        return sprintf(
+            "<div class='vault-image vault-image--missing'><span>Image not found: %s</span></div>",
+            e($filename)
+        );
     }
 }

@@ -16,12 +16,10 @@
         <link rel="stylesheet" href="{{ asset('css/highlightjs-dark.css') }}" title="highlight-dark">
         <link rel="stylesheet" href="{{ asset('css/highlightjs-light.css') }}" title="highlight-light">
 
-        <script src="https://d3js.org/d3.v7.min.js"></script>
-
         <!-- Mermaid -->
         <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
-        <!-- Mathjax -->
+        <!-- MathJax -->
         <script>
             MathJax = {
                 tex: {
@@ -29,7 +27,6 @@
                 }
             };
         </script>
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
         @vite('resources/js/app.js')
@@ -143,7 +140,7 @@
             </div>
         </div>
 
-        <div class="image-modal-wrapper absolute top-0 left-0 right-0 bottom-0 bg-gray-500 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-70 max-h-screen max-w-screen" x-show="showingImage" x-transition x-data="{ showingImage: false, shownImage: '', showImage: function($event) { console.log($event); this.shownImage = $event.detail; this.showingImage = true; console.log(this); }, hideImage: function($event) { console.log($event); this.showingImage = false; this.image = ''; } }" @open-image.window="showImage" @close-image.window="hideImage" x-cloak>
+        <div class="image-modal-wrapper absolute top-0 left-0 right-0 bottom-0 bg-gray-500 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-70 max-h-screen max-w-screen" x-show="showingImage" x-transition x-data="{ showingImage: false, shownImage: '', showImage: function($event) { this.shownImage = $event.detail; this.showingImage = true; }, hideImage: function($event) { this.showingImage = false; this.shownImage = ''; } }" @open-image.window="showImage" @close-image.window="hideImage" x-cloak>
             <div id="image-modal" class="min-h-full min-w-full max-w-screen max-h-screen overflow-y-auto grid place-items-center cursor-pointer">
                 <i class="fa fa-times p-6 text-gray-900 dark:text-gray-200 cursor-pointer absolute top-0 right-0" @click="hideImage"></i>
                 <img :src="shownImage" alt="" class="m-6 cursor-default shadow-lg" @click.away="hideImage">

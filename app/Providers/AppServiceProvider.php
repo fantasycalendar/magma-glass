@@ -2,30 +2,26 @@
 
 namespace App\Providers;
 
-use App\Services\ArticleCache;
+use App\Services\ArticleRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->app->singleton('articles', function($app){
-            return new ArticleCache();
+        $this->app->singleton('articles', function ($app) {
+            return new ArticleRepository();
         });
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        \Debugbar::disable();
+        //
     }
 }

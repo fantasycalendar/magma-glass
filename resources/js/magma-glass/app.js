@@ -12,9 +12,7 @@ export default() => ({
     'showSearchResults': false,
 
     init() {
-        console.log('Initing');
         if(!location.pathname.startsWith('/a')) {
-            console.log(location.pathname);
             this.loaded = true;
             return;
         }
@@ -28,11 +26,7 @@ export default() => ({
                 content: storedArticle.content,
             }
             this.loaded = true;
-            console.log("loaded from cache!");
         }
-
-        console.log("Stored article was ");
-        console.log(storedArticle);
     },
 
     postInit() {
@@ -43,14 +37,13 @@ export default() => ({
             currentItem = localStorage.getItem(localStorage.key(i));
             currentKey = localStorage.key(i);
 
-            if (currentItem.includes("expiry")) {
+            if (currentItem && currentItem.includes("expiry")) {
                 this.getWithExpiry(currentKey);
             }
         }
 
         if(!this.loaded) {
-            console.log("We didn't load from cache, fetch it.");
-            this.updateArticle(decodeURI(location.pathname.substr(2)))
+            this.updateArticle(decodeURI(location.pathname.substring(2)))
             this.loaded = true;
         }
 
@@ -58,14 +51,13 @@ export default() => ({
     },
 
     updateArticle(path, back = false) {
-        console.log("Asked to update article to " + path);
-
         if(!location.pathname.startsWith('/a/')) {
             self.location = '/a/' + path;
+            return;
         }
 
         if(path.endsWith('.md')) {
-            path = path.substr(0, path.length - 3);
+            path = path.slice(0, path.length - 3);
         }
         if(!path.startsWith('/')) {
             path = '/' + path;
@@ -74,7 +66,6 @@ export default() => ({
         let storedArticle = this.getWithExpiry('article_content_cache.' + path);
 
         if (storedArticle !== null) {
-            console.log("Got an article!");
             this.article = storedArticle;
         } else {
             axios.get('/get-article/', {
@@ -82,10 +73,15 @@ export default() => ({
                     articlePath: path
                 }
             }).then(response => {
-                if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
+                if (response.status !== 200) {
+                    console.error(`Article fetch failed: ${response.status} - ${response.statusText}`);
+                    return;
+                }
 
                 return response.data;
             }).then(data => {
+                if (!data) return;
+
                 this.article = {
                     title: data.title,
                     content: data.content
@@ -93,7 +89,9 @@ export default() => ({
 
                 this.$nextTick(() => this.postRender());
 
-                this.setWithExpiry('article_content_cache.' + decodeURI(location.pathname.substr(2)), this.article, 300000);
+                this.setWithExpiry('article_content_cache.' + decodeURI(location.pathname.substring(2)), this.article, 300000);
+            }).catch(error => {
+                console.error('Failed to fetch article:', error);
             });
         }
 
@@ -107,7 +105,6 @@ export default() => ({
     },
 
     postRender() {
-        console.log('postRender');
         hljs.highlightAll();
         mermaid.init(undefined, "code.language-mermaid");
         MathJax.typeset()
@@ -119,12 +116,17 @@ export default() => ({
                 searchTerm: this.searchTerm
             }
         }).then(response => {
-            if (!response.status === 200) alert(`Something went wrong: ${response.status} - ${response.statusText}`);
+            if (response.status !== 200) {
+                console.error(`Search failed: ${response.status} - ${response.statusText}`);
+                return;
+            }
 
             return response.data;
         }).then(data => {
+            if (!data) return;
             this.searchResults = data;
-            console.log(data);
+        }).catch(error => {
+            console.error('Search request failed:', error);
         });
     },
 
@@ -134,26 +136,31 @@ export default() => ({
             expiry: new Date().getTime() + ttl,
         }
 
-        console.log("Storing " + key + " as:");
-        console.log(item);
         localStorage.setItem(key, JSON.stringify(item))
     },
 
     getWithExpiry(key) {
         const itemStr = localStorage.getItem(key)
-        console.log("Retrieved " + key + " as:");
-        console.log(itemStr);
 
         if (!itemStr) {
             return null
         }
 
-        const item = JSON.parse(itemStr)
+        try {
+            const item = JSON.parse(itemStr)
 
-        if (new Date().getTime() > item.expiry) {
-            localStorage.removeItem(key)
-            return null
+            if (!item || !item.expiry) {
+                return null;
+            }
+
+            if (new Date().getTime() > item.expiry) {
+                localStorage.removeItem(key)
+                return null
+            }
+            return item.value
+        } catch (e) {
+            localStorage.removeItem(key);
+            return null;
         }
-        return item.value
     }
 })

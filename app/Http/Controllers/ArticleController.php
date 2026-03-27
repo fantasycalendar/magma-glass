@@ -2,63 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\RetrieveArticle;
-use App\Services\ArticleCache;
+use App\Services\ArticleRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    public function test()
+    public function index(): \Illuminate\View\View
     {
-//        dd(RetrieveArticle::dispatchSync('Orlbar/Temple of the Undying Magister')->getBlocks());
-        dd(RetrieveArticle::dispatchSync('How to/Format your notes')->getParsed());
-
-        return;
-    }
-
-    public function index()
-    {
-        app()->make('articles')->clearCache();
-
         return view('show_article');
     }
 
-    public function articleJson(Request $request)
+    public function articleJson(Request $request): array
     {
-        logger()->debug('-------------new request!------------');
-        $article = RetrieveArticle::dispatchSync($request->input('articlePath') ?? '');
+        /** @var ArticleRepository $repository */
+        $repository = app()->make('articles');
+        $articlePath = $request->input('articlePath', '');
+
+        $article = $this->resolveArticle($repository, $articlePath);
 
         return [
             'title' => $article->name,
             'content' => $article->getParsed(),
-            'path' => $request->input('articlePath') ?? '',
-            'links' => app()->make('articles')->getLinks()
+            'path' => $articlePath,
+            'links' => $repository->getLinks(),
         ];
     }
 
-    public function noSuchArticle(Request $request)
-    {
-        $article = $request->get('articlePath');
-
-        return "Article '$article' does not exist";
-    }
-
-    public function tag($tag)
+    public function tag(string $tag): \Illuminate\View\View
     {
         return view('tag_search', [
             'tagSearch' => $tag,
-            'results' => app()->make('articles')->allWithTag($tag)
+            'results' => app()->make('articles')->allWithTag($tag),
         ]);
     }
 
-    public function linkData()
+    public function linkData(): array
     {
         return app()->make('articles')->getLinkData();
     }
 
-    public function search()
+    public function search(Request $request): \Illuminate\Support\Collection
     {
-        return app()->make('articles')->search(request()->input('searchTerm'));
+        return app()->make('articles')->search($request->input('searchTerm', ''));
+    }
+
+    /**
+     * Resolve an article from a path, falling back to home pages.
+     */
+    private function resolveArticle(ArticleRepository $repository, string $articlePath): \App\Models\Article
+    {
+        if ($articlePath === '' || $articlePath === '/') {
+            $articlePath = $this->resolveDefaultArticlePath() ?? '/Home';
+        }
+
+        return $repository->getByArticlePath($articlePath);
+    }
+
+    /**
+     * Try to find a default home article in the vault root.
+     */
+    private function resolveDefaultArticlePath(): ?string
+    {
+        if (config('magmaglass.default_article_path')) {
+            return config('magmaglass.default_article_path');
+        }
+
+        $files = collect(\Illuminate\Support\Facades\Storage::disk('articles')->files('/'));
+
+        $pathsToTry = [
+            'home.md',
+            'start here.md',
+            'index.md',
+        ];
+
+        return $files->filter(fn ($file) => in_array(\Illuminate\Support\Str::lower($file), $pathsToTry))->first();
     }
 }

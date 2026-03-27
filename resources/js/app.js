@@ -35,15 +35,13 @@ hotkeys('ctrl+shift+l', function(event, handler){
 
 hotkeys('ctrl+f5,ctrl+shift+r', function(event, handler){
     event.preventDefault();
-    let currentItem;
-    let currentKey;
     let toRemove = [];
 
     for (let i = 0; i < localStorage.length; i++){
-        currentItem = localStorage.getItem(localStorage.key(i));
-        currentKey = localStorage.key(i);
+        let currentItem = localStorage.getItem(localStorage.key(i));
+        let currentKey = localStorage.key(i);
 
-        if (currentItem.includes("expiry")) {
+        if (currentItem && currentItem.includes("expiry")) {
             toRemove.push(currentKey);
         }
     }
@@ -52,7 +50,6 @@ hotkeys('ctrl+f5,ctrl+shift+r', function(event, handler){
         localStorage.removeItem(toRemove[i]);
     }
 
-    let url = new URL(location.href);
-    url.searchParams.append('cold_boot', 'true')
-    self.location = url;
+    // Hard refresh the page (clears client-side article cache only)
+    self.location = location.href;
 });

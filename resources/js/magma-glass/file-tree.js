@@ -25,7 +25,6 @@ export default() => ({
         }
     },
     toggleLevel: function(el) {
-        console.log(el);
         if( el.style.length && el.style.display === 'none' ) {
             this.showLevel(el);
         } else {

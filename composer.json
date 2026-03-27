@@ -1,39 +1,27 @@
 {
-    "name": "laravel/laravel",
+    "name": "v13axel/magma-glass",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "A self-hosted alternative to Obsidian Publish.",
+    "keywords": ["obsidian", "publish", "markdown", "vault"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.2 || ^8.5",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.2",
+        "laravel/framework": "^10.10 || ^11.0 || ^12.0",
+        "laravel/sanctum": "^3.2 || ^4.0",
         "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.0",
-        "paquettg/php-html-parser": "^3.1",
-        "spatie/laravel-github-webhooks": "^1.1",
-        "symfony/yaml": "^6.0",
-        "symplify/git-wrapper": "^9.4"
+        "spatie/laravel-github-webhooks": "^1.1"
     },
     "require-dev": {
-        "laravel/breeze": "^1.4",
         "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.23",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "pestphp/pest": "^2.33",
-        "pestphp/pest-plugin-livewire": "^2.1",
-        "phpunit/phpunit": "^10.1"
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^7.0 || ^8.0",
+        "pestphp/pest": "^2.33 || ^3.0",
+        "phpunit/phpunit": "^10.1 || ^11.0 || ^12.0"
     },
-    "repositories": [
-        {
-            "url": "https://github.com/arthur0102/php-html-parser.git",
-            "type": "git"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",
@@ -77,6 +65,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

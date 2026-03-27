@@ -13,15 +13,15 @@
         @apply text-xl;
     }
 
-    #article-content > *{
+    #article-content > * {
         @apply pt-3;
     }
 
-    #article-content a:not([class*='text-']) {
+    #article-content a:not([class*='text-']):not(.wikilink) {
         @apply text-teal-600 dark:text-teal-500;
     }
 
-    #article-content a:not([class*='text-']):after {
+    #article-content a:not([class*='text-']):not(.wikilink)::after {
         content: '\f360';
         font-family: "Font Awesome 5 Free Solid";
         font-weight: 400;
@@ -66,29 +66,12 @@
         @apply border-gray-100 dark:border-gray-700 mt-6;
     }
 
-    #article-content .article-block:not(:first-child) > h1 {
-        @apply pt-8;
-    }
-    #article-content .article-block:not(:first-child) > h2 {
-        @apply pt-6;
-    }
-    #article-content .article-block:not(:first-child) > h3 {
-        @apply pt-5;
-    }
-    #article-content .article-block:not(:first-child) > h4 {
-        @apply pt-3;
-    }
-    #article-content .article-block:not(:first-child) > h5 {
-        @apply pt-2;
-    }
-    #article-content .article-block:not(:first-child) > h6 {
-        @apply pt-2;
-    }
-
-    /*input:not(:focus) + .search-results {*/
-    /*    display: none;*/
-    /*}*/
-
+    #article-content .article-block:not(:first-child) > h1 { @apply pt-8; }
+    #article-content .article-block:not(:first-child) > h2 { @apply pt-6; }
+    #article-content .article-block:not(:first-child) > h3 { @apply pt-5; }
+    #article-content .article-block:not(:first-child) > h4 { @apply pt-3; }
+    #article-content .article-block:not(:first-child) > h5 { @apply pt-2; }
+    #article-content .article-block:not(:first-child) > h6 { @apply pt-2; }
 
     input[type="search"]::-webkit-search-cancel-button {
         -webkit-appearance: none;
@@ -109,5 +92,60 @@
 
     .language-mermaid {
         @apply grid place-items-center p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center;
+    }
+}
+
+/* Article content element styles (moved from PHP pipeline) */
+@layer components {
+    /* Wikilinks */
+    .wikilink {
+        @apply text-teal-600 dark:text-teal-500 font-semibold;
+    }
+
+    .wikilink--missing {
+        @apply text-rose-700 dark:text-rose-500;
+    }
+
+    /* Tables */
+    .article-table {
+        @apply min-w-full max-w-full divide-y divide-gray-800 mb-8 mt-4;
+    }
+
+    .article-table__head {
+        @apply bg-gray-700;
+    }
+
+    .article-table__body {
+        @apply bg-gray-700 divide-y divide-gray-800;
+    }
+
+    .article-table__header-cell {
+        @apply px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider;
+    }
+
+    .article-table__data-cell {
+        @apply px-6 py-4 text-sm text-gray-200;
+    }
+
+    /* Blockquotes */
+    .article-blockquote {
+        @apply p-2 m-2 border-l-2 border-gray-600 bg-gray-700;
+    }
+
+    /* Vault images */
+    .vault-image {
+        @apply flex flex-col p-6 border bg-gray-100 shadow-sm m-6 dark:bg-gray-700 dark:border-gray-600 rounded text-center;
+    }
+
+    .vault-image--sized {
+        @apply inline-flex p-2 my-6;
+    }
+
+    .vault-image__caption {
+        @apply text-gray-400 pt-4;
+    }
+
+    .vault-image--missing {
+        @apply italic text-gray-400;
     }
 }

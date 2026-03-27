@@ -1,6 +1,6 @@
 <div class="mx-5 pt-4 relative">
-    <label for="email" class="sr-only">Email</label>
-    <input type="search" name="email" id="email"
+    <label for="article-search" class="sr-only">Search articles</label>
+    <input type="search" name="search" id="article-search"
            class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600"
            x-model="searchTerm"
            @input.debounce="fetchSearchResults"
