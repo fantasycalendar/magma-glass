@@ -38,15 +38,24 @@ class ConvertWikilinks extends Pipe
 
             return sprintf(
                 "<a class='wikilink' href='#' @click.prevent='\$dispatch(\"article-change\", `%s`)'>%s</a>",
-                addslashes($path),
+                self::escapeForTemplateLiteral($path),
                 e($linkLabel)
             );
         }
 
         return sprintf(
             "<a class='wikilink wikilink--missing' href='#' @click.prevent='\$dispatch(\"article-change\", `%s`)'>%s</a>",
-            addslashes($linkTarget),
+            self::escapeForTemplateLiteral($linkTarget),
             e($linkLabel)
         );
+    }
+
+    /**
+     * Escape a string for use inside a JS template literal (backticks).
+     * Only backticks and ${} interpolation need escaping -- apostrophes are safe.
+     */
+    private static function escapeForTemplateLiteral(string $value): string
+    {
+        return str_replace(['\\', '`', '$'], ['\\\\', '\\`', '\\$'], $value);
     }
 }
