@@ -31,31 +31,46 @@ test('nameIsHeading returns false when first line differs from name', function (
 });
 
 test('nameIsHeading returns false when content has no heading', function () {
-    $article = new Article('My Note', 'my-note.md', "Just plain text content");
+    $article = new Article('My Note', 'my-note.md', 'Just plain text content');
 
     expect($article->nameIsHeading())->toBeFalse();
 });
 
 test('nameIsHeading handles single-line content', function () {
-    $article = new Article('My Note', 'my-note.md', "# My Note");
+    $article = new Article('My Note', 'my-note.md', '# My Note');
 
     expect($article->nameIsHeading())->toBeTrue();
 });
 
-test('hideFirstLine removes the first line of content', function () {
-    $article = new Article('Test', 'test.md', "First line\nSecond line\nThird line");
+test('nameIsHeading detects heading after front matter', function () {
+    $article = new Article('My Note', 'my-note.md', "---\ntitle: Custom\n---\n# My Note\nSome content");
 
-    $article->hideFirstLine();
-
-    expect($article->content)->toBe("Second line\nThird line");
+    expect($article->nameIsHeading())->toBeTrue();
 });
 
-test('hideFirstLine handles single-line content', function () {
-    $article = new Article('Test', 'test.md', "Only line");
+test('nameIsHeading returns false when heading after front matter differs', function () {
+    $article = new Article('My Note', 'my-note.md', "---\ntitle: Custom\n---\n# Different\nSome content");
 
-    $article->hideFirstLine();
+    expect($article->nameIsHeading())->toBeFalse();
+});
 
-    expect($article->content)->toBe('');
+test('stripNameHeading removes heading from content without front matter', function () {
+    $article = new Article('My Note', 'my-note.md', "# My Note\nSome content here");
+
+    $article->stripNameHeading();
+
+    expect($article->content)->not->toContain('# My Note');
+    expect($article->content)->toContain('Some content here');
+});
+
+test('stripNameHeading removes heading from content with front matter', function () {
+    $article = new Article('My Note', 'my-note.md', "---\ntitle: Custom\n---\n# My Note\nSome content");
+
+    $article->stripNameHeading();
+
+    expect($article->content)->not->toContain('# My Note');
+    expect($article->content)->toContain('---');
+    expect($article->content)->toContain('Some content');
 });
 
 test('setContent replaces content and returns self', function () {

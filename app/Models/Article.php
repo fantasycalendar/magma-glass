@@ -8,9 +8,13 @@ use Illuminate\Support\Collection;
 class Article
 {
     public string $content;
+
     public string $name;
+
     public string $path;
+
     public Collection $tags;
+
     private Collection $frontMatter;
 
     public function __construct(string $name, string $path, string $contents, array|Collection $tags = [])
@@ -23,29 +27,57 @@ class Article
     }
 
     /**
-     * Determine whether the first line of content is a heading matching the article name.
+     * Determine whether the first non-front-matter line of content is a heading matching the article name.
      */
     public function nameIsHeading(): bool
     {
-        $firstNewline = strpos($this->content, "\n");
-        $firstLine = $firstNewline !== false
-            ? substr($this->content, 0, $firstNewline)
-            : $this->content;
+        $content = $this->contentWithoutFrontMatter();
 
-        return trim($firstLine) === '# ' . $this->name;
+        $firstNewline = strpos($content, "\n");
+        $firstLine = $firstNewline !== false
+            ? substr($content, 0, $firstNewline)
+            : $content;
+
+        return trim($firstLine) === '# '.$this->name;
     }
 
     /**
-     * Removes the first line of the content.
+     * Strip the YAML front matter block (---...---) from the beginning of content.
      */
-    public function hideFirstLine(): self
+    private function contentWithoutFrontMatter(): string
     {
-        $firstNewline = strpos($this->content, "\n");
-        if ($firstNewline !== false) {
-            $this->content = substr($this->content, $firstNewline + 1);
-        } else {
-            $this->content = '';
+        $content = $this->content;
+
+        if (! str_starts_with(trim($content), '---')) {
+            return $content;
         }
+
+        // Find the closing --- after the opening one
+        $start = strpos($content, '---');
+        $end = strpos($content, '---', $start + 3);
+
+        if ($end === false) {
+            return $content;
+        }
+
+        return ltrim(substr($content, $end + 3));
+    }
+
+    /**
+     * Removes the heading line that matches the article name from the content.
+     * Handles both raw content (with front matter) and plain content.
+     */
+    public function stripNameHeading(): self
+    {
+        $headingLine = '# '.$this->name;
+
+        // Replace the first occurrence of the heading line
+        $this->content = preg_replace(
+            '/^'.preg_quote($headingLine, '/').'\s*$/m',
+            '',
+            $this->content,
+            1
+        );
 
         return $this;
     }
@@ -56,7 +88,7 @@ class Article
     public function getParsed(): string
     {
         if ($this->nameIsHeading()) {
-            $this->hideFirstLine();
+            $this->stripNameHeading();
         }
 
         return ArticlePipeline::process($this)->content;
