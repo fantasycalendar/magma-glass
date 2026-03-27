@@ -15,6 +15,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
+        "laravel/boost": "^2.4",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.23",
         "mockery/mockery": "^1.6",
@@ -43,7 +44,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi",
+            "@php artisan boost:update --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

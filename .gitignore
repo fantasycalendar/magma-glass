@@ -9,10 +9,19 @@
 .env
 .env.backup
 .phpunit.result.cache
-docker-compose.override.yml
+
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# Laravel Boost (auto-generated)
+.mcp.json
+boost.json
+opencode.json
+AGENTS.md
+CLAUDE.md
+.agents/
+.claude/
